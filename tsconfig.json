@@ -13,7 +13,12 @@
         "noEmit": true,
         "paths": {
             "@/*": ["./resources/js/*"],
-            "ziggy-js": ["./vendor/tightenco/ziggy"]
+            "ziggy-js": ["./vendor/tightenco/ziggy"],
+            "@components/*": ["./resources/js/Components/*"],
+            "@layouts/*": ["./resources/js/Layouts/*"],
+            "@pages/*": ["./resources/js/Pages/*"],
+            "@images/*": ["./public/assets/images/*"],
+            "@lib/*": ["./resources/js/lib/*"],
         }
     },
     "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
