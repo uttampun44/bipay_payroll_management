@@ -1,12 +1,11 @@
-import GuestLayout from "@/Layouts/GuestLayout";
-import { Button, Input } from "@headlessui/react";
+import { Button} from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
-import LoginImage from "@images/login.png";
 import Header from "@/Components/Header";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
+import { toast } from "sonner";
 
 export default function Login({
     status,
@@ -26,6 +25,9 @@ export default function Login({
 
         post(route("login"), {
             onFinish: () => reset("password"),
+            onSuccess: () => {
+                toast.success("Login Successful");
+            }
         });
     };
 
@@ -58,7 +60,7 @@ export default function Login({
                         <h2 className="text-2xl font-semibold text-center mb-6">
                             Sign In
                         </h2>
-                        <form>
+                        <form onSubmit={submit}>
                             <div className="space-y-4">
                                 <div className="mt-4">
                                     <InputLabel
@@ -69,11 +71,11 @@ export default function Login({
                                         id="email"
                                         type="email"
                                         name="email"
-                                        value={data.password}
+                                        value={data.email}
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
                                         onChange={(e) =>
-                                            setData("password", e.target.value)
+                                            setData("email", e.target.value)
                                         }
                                         required
                                     />
