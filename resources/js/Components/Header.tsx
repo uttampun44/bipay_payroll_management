@@ -7,7 +7,7 @@ export default function Header() {
     const pathname = window.location.pathname;
 
   return (
-     <nav className="flex justify-end gap-4 bg-white p-4 max-w-[1440px] mx-auto w-full">
+     <nav className="flex justify-end gap-4 p-4 max-w-[1440px] mx-auto w-full">
       <Link
         href="/"
         className={clsx(
