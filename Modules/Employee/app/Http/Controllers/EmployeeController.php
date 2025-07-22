@@ -4,6 +4,7 @@ namespace Modules\Employee\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EmployeeController extends Controller
 {
@@ -12,7 +13,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee::index');
+       return Inertia::render('Employee::Index');
     }
 
     /**

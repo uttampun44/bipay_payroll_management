@@ -19,6 +19,7 @@
             "@pages/*": ["./resources/js/Pages/*"],
             "@images/*": ["./public/assets/images/*"],
             "@lib/*": ["./resources/js/lib/*"],
+            "@hooks/*": ["./resources/js/hooks/*"],
         }
     },
     "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
