@@ -13,7 +13,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-       return Inertia::render('Employee::Index');
+       return Inertia::render('Employee::Employee/Index');
     }
 
     /**

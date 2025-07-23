@@ -11,16 +11,33 @@
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "noEmit": true,
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["./resources/js/*"],
+             "@/*": [
+                "./resources/js/*",
+                "./resources/js/*/index.ts",
+                "./resources/js/*/index.tsx"
+                
+            ],
+            "@/Components/*": ["./resources/js/Components/*"],
+            "@/Layouts/*": ["./resources/js/Layouts/*"],
+            "@/types": ["./resources/js/types"],
             "ziggy-js": ["./vendor/tightenco/ziggy"],
+            "@components": ["./resources/js/Components"],
             "@components/*": ["./resources/js/Components/*"],
             "@layouts/*": ["./resources/js/Layouts/*"],
             "@pages/*": ["./resources/js/Pages/*"],
             "@images/*": ["./public/assets/images/*"],
             "@lib/*": ["./resources/js/lib/*"],
             "@hooks/*": ["./resources/js/hooks/*"],
+            "Modules/*": ["./Modules/*"]
         }
     },
-    "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
+     "include": [
+    "resources/js/**/*.ts", 
+    "resources/js/**/*.tsx", 
+    "resources/js/**/*.d.ts", 
+    "Modules/**/resources/js/**/*"
+  ],
+  "exclude": ["node_modules", "public"]
 }

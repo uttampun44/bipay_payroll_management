@@ -2,6 +2,7 @@ import { Link } from "@inertiajs/react";
 import Icon from "./Icon";
 import { sidebarLinks } from "@/Pages/data/sidebar";
 import useToggle from "@/hooks/useToggle";
+import { Button } from "@headlessui/react";
 
 export default function Sidebar() {
     const { isToggle, toggle } = useToggle(false);
@@ -16,15 +17,14 @@ export default function Sidebar() {
                 ${isToggle ? "w-20" : "w-60"}
             `}
         >
-          
-
+        
             <div className="sidebar-menu text-lg font-normal px-4">
                 <ul className="space-y-2">
                     {sidebarLinks.map((link) => (
                         <li key={link.name}>
                             {link.subNavigation ? (
                                 <div>
-                                    <button
+                                    <Button
                                         onClick={toggleSubMenu}
                                         className="w-full flex items-center justify-between p-2 hover:bg-neutral-200 rounded-lg"
                                     >
@@ -49,7 +49,7 @@ export default function Sidebar() {
                                                 className="w-4 h-4"
                                             />
                                         )}
-                                    </button>
+                                    </Button>
                                     {isSubMenuOpen && !isToggle && (
                                         <ul className="pl-7 mt-2 space-y-2">
                                             {link.subNavigation.map((subLink) => (
