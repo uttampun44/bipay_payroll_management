@@ -32,7 +32,7 @@ export const sidebarLinks: sidebarLinksType[] = [
             },
             {
                 name: "Appointment",
-                href: "/appointment",
+                href: "/appointments",
                 icon: "appointment",
             }
         ],

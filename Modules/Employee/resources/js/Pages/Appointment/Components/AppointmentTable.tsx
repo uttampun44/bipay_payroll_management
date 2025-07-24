@@ -1,25 +1,17 @@
 import TextInput from "@/Components/TextInput";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/Components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 
-export default function EmployeeTable() {
+export default function AppointmentTable(){
     return (
-        <div className="employe-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
+          <div className="appointment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
             <div className="text-search">
                 <TextInput placeholder="Search" className="w-1/2" />
             </div>
-            <div className="employee my-3">
-                <h6 className="text-black text-lg font-semibold ">Employee</h6>
+            <div className="appointment my-3">
+                <h6 className="text-black text-lg font-semibold ">Appointments</h6>
             </div>
             <Table>
-               
                 <TableHeader className="bg-neutral-100">
                     <TableRow>
                         <TableHead>ID</TableHead>
@@ -65,5 +57,5 @@ export default function EmployeeTable() {
                 </Pagination>
             </div>
         </div>
-    );
+    )
 }

@@ -1,6 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
+import Icon from "./Icon";
 
 export default function TopNavigation() {
     const user = usePage().props.auth.user;
@@ -16,7 +17,8 @@ export default function TopNavigation() {
                         <h6>BIPAY</h6>
                     </div>
                 </Link>
-                <div className="flex h-16 justify-between">
+                <div className="flex h-16 justify-between items-center">
+                    <Icon iconName="notification" className="text-gray-500" />
                     <div className="hidden sm:ms-6 sm:flex sm:items-center">
                         <div className="relative ms-3">
                             <Dropdown>

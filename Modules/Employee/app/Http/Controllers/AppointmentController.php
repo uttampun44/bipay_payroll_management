@@ -3,23 +3,22 @@
 namespace Modules\Employee\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Employee\app\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Modules\Employee\app\Repositories\AppointmentRepository;
 
-class EmployeeController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $employeeRepository;
-    public function __construct(EmployeeRepository $employeeRepository)
+    protected $appointmentRepository;
+    public function __construct(AppointmentRepository $appointmentRepository)
     {
-        $this->employeeRepository = $employeeRepository;
+        $this->appointmentRepository = $appointmentRepository;
     }
     public function index()
     {
-       return $this->employeeRepository->index();
+        return $this->appointmentRepository->index();
     }
 
     /**

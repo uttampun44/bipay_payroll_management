@@ -123,6 +123,40 @@ const Icons = {
             <path d="M6 4v4" />
         </svg>
     ),
+    notification: (
+        <svg
+            width="16"
+            height="17"
+            viewBox="0 0 16 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g clipPath="url(#clip0_758_3041)">
+                <path
+                    d="M4.11584 4.25758C4.28455 2.64323 5.73825 1.5 7.47569 1.5H8.52431C10.2618 1.5 11.7155 2.64323 11.8842 4.25758L12.2348 7.80303C12.3619 9.01954 12.9113 10.2534 13.7994 11.1515C14.2434 11.6005 13.9022 12.5303 13.2477 12.5303H2.75233C2.09777 12.5303 1.75663 11.6005 2.20061 11.1515C3.08866 10.2534 3.63806 9.01954 3.76519 7.80303L4.11584 4.25758Z"
+                    stroke="#212143"
+                    strokeWidth="1.20741"
+                    strokeLinejoin="round"
+                />
+                <path
+                    d="M6.13794 12.5303H9.86207V12.7273C9.86207 13.7063 9.0284 14.5 8.00001 14.5C6.97161 14.5 6.13794 13.7063 6.13794 12.7273V12.5303Z"
+                    stroke="#212143"
+                    strokeWidth="1.20741"
+                    strokeLinejoin="round"
+                />
+            </g>
+            <defs>
+                <clipPath id="clip0_758_3041">
+                    <rect
+                        width="16"
+                        height="16"
+                        fill="white"
+                        transform="translate(0 0.5)"
+                    />
+                </clipPath>
+            </defs>
+        </svg>
+    ),
 };
 
 export type IconType = keyof typeof Icons;

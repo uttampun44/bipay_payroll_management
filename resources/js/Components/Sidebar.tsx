@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 import Icon from "./Icon";
-import { sidebarLinks } from "@/Pages/data/sidebar";
+import { sidebarLinks } from "@/data/sidebar";
 import useToggle from "@/hooks/useToggle";
 import { Button } from "@headlessui/react";
 

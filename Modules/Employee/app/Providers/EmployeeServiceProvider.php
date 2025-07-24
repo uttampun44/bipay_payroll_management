@@ -1,7 +1,9 @@
 <?php
 
-namespace Modules\Employee\Providers;
+namespace Modules\Employee\app\Providers;
 
+use Modules\Employee\app\Repositories\EmployeeRepository;
+use Modules\Employee\app\Repositories\AppointmentRepository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
@@ -36,6 +38,12 @@ class EmployeeServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(EmployeeRepository::class, function () {
+            return new EmployeeRepository();
+        });
+        $this->app->bind(AppointmentRepository::class, function () {
+            return new AppointmentRepository();
+        });
     }
 
     /**
