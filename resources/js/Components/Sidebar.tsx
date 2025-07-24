@@ -12,7 +12,7 @@ export default function Sidebar() {
         <aside
             className={`
                 bg-neutral-100 absolute top-22 left-0 
-                h-[calc(100vh-90px)] border-r-2 border-neutral-200
+               h-full border-r-2 border-neutral-200
                 transition-all duration-300 ease-in-out p-4
                 ${isToggle ? "w-20" : "w-60"}
             `}

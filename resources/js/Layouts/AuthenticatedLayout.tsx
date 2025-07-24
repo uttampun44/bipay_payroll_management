@@ -8,10 +8,13 @@ export default function Authenticated({
 }: PropsWithChildren<{ header?: ReactNode }>) {
 
     return (
-        <>
+       <div className="min-h-screen bg-neutral-100">
             <TopNavigation />
             <Sidebar />
-            <main className="bg-neutral-100">{children}</main>
-        </>
+         
+            <main className="ml-60 bg-neutral-100 min-h-screen">
+                {children}
+            </main>
+        </div>
     );
 }
