@@ -5,13 +5,13 @@ import useToggle from "@/hooks/useToggle";
 import { Button } from "@headlessui/react";
 
 export default function Sidebar() {
-    const { isToggle, toggle } = useToggle(false);
+    const { isToggle} = useToggle(false);
     const { isToggle: isSubMenuOpen, toggle: toggleSubMenu } = useToggle(false);
 
     return (
         <aside
             className={`
-                bg-neutral-100 absolute top-22 left-0 
+                bg-neutral-100 fixed top-[90px] left-0 
                h-full border-r-2 border-neutral-200
                 transition-all duration-300 ease-in-out p-4
                 ${isToggle ? "w-20" : "w-60"}
