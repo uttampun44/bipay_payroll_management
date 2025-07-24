@@ -3,10 +3,14 @@ import { Button } from "@/Components/ui/button";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import AppointmentTable from "./Components/AppointmentTable";
+import AppointmentDialog from "./Components/AppointmentDialog";
+import { useState } from "react";
 
 export default function Index() {
 
       const pathUrl = window.location.pathname;
+      const [isOpen, setOpen] = useState(false);
+
     return (
        <AuthenticatedLayout>
             <Head title="Appointment" />
@@ -32,7 +36,10 @@ export default function Index() {
                         Appointments
                     </h6>
                     <div className="modal-employee flex gap-3">
-                        <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <Button
+                         type="button"
+                        className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                        onClick={() => setOpen(true)}>
                             Add Appointment
                         </Button>
                         <Button className="bg-white text-black px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
@@ -42,6 +49,7 @@ export default function Index() {
                 </div>
             </div>
             <AppointmentTable />
+            <AppointmentDialog open={isOpen} setOpen={setOpen} />
         </AuthenticatedLayout>
     )
 }

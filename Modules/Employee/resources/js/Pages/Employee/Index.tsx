@@ -3,10 +3,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import EmployeeTable from "./Components/EmployeeTable";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
+import EmployeeDialog from "./Components/EmployeeDialog";
+import { useState } from "react";
 
 export default function Index() {
 
     const pathUrl = window.location.pathname;
+
+    const [isOpen, setOpen] = useState(false);
    
     return (
         <AuthenticatedLayout>
@@ -33,7 +37,12 @@ export default function Index() {
                         Employee
                     </h6>
                     <div className="modal-employee flex gap-3">
-                        <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                         type="button"
+                         onClick={() => {
+                            setOpen(true);
+                         }}
+                        >
                             Add Employee
                         </Button>
                         <Button className="bg-white text-black px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
@@ -43,6 +52,7 @@ export default function Index() {
                 </div>
             </div>
             <EmployeeTable />
+            <EmployeeDialog open={isOpen} setOpen={setOpen} />
         </AuthenticatedLayout>
     );
 }
