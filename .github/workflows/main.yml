@@ -1,1 +1,46 @@
 name: "Bipay payroll management"
+
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                node-version: 20.18.0
+                
+                #create .env file
+            - name: Create .env file
+              run: |
+                touch .env
+                     # env debug
+               
+            #env debug
+            - name: Debug .env contents
+              run: cat .env
+              
+              #node install
+            - name: node install
+              run: npm install
+             
+              #composer install
+            - name: composer install
+              run: composer install
+
+              #php artisan key:generate
+            - name: php artisan key:generate
+              run: php artisan key:generate
+
+              #npm run dev
+            - name: npm run dev
+              run: npm run dev
+
+              #php artisan serve
+            - name: php artisan serve
+              run: php artisan serve
