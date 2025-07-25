@@ -39,7 +39,7 @@ jobs:
 
               #build front assets
             - name: Build Front assets
-              run: npm run dev
+              run: npm run build
 
               #php artisan serve
             - name: php artisan serve
