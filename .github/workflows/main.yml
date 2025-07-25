@@ -26,7 +26,7 @@ jobs:
               run: cat .env
               
               #node install
-            - name: node install
+            - name: Install dependencies
               run: npm install
              
               #composer install
@@ -34,11 +34,11 @@ jobs:
               run: composer install
 
               #php artisan key:generate
-            - name: php artisan key:generate
+            - name: php artisan key generate
               run: php artisan key:generate
 
-              #npm run dev
-            - name: npm run dev
+              #build front assets
+            - name: Build Front assets
               run: npm run dev
 
               #php artisan serve
