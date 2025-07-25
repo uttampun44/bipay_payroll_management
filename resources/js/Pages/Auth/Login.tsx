@@ -1,6 +1,6 @@
 import { Button} from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import React, { FormEventHandler } from "react";
 import Header from "@/Components/Header";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -32,12 +32,12 @@ export default function Login({
     };
 
     return (
-        <>
+        <React.Fragment>
             <Head title="Log in" />
             <Header />
 
-            <section className="bg-[#F0F4FC] min-h-screen flex items-center justify-center">
-                <div className="container max-w-[1440px] mx-auto px-4 py-10 flex flex-col lg:flex-row items-center gap-y-10 lg:gap-x-20">
+            <section className="bg-[#F0F4FC] min-h-screen  flex items-center justify-center">
+                <div className="container max-w-[1440px] mx-auto px-4 flex flex-col lg:flex-row items-center gap-y-10 lg:gap-x-20">
                     <div className="w-full lg:w-[70%] flex flex-col items-center text-center gap-6">
                         <h1 className="text-3xl md:text-4xl font-bold">
                             Welcome to{" "}
@@ -55,7 +55,6 @@ export default function Login({
                         />
                     </div>
 
-                    {/* Right Side (Form) */}
                     <div className="w-full lg:w-[30%] bg-white p-6 rounded-lg shadow-md max-w-sm">
                         <h2 className="text-2xl font-semibold text-center mb-6">
                             Sign In
@@ -120,6 +119,6 @@ export default function Login({
                     </div>
                 </div>
             </section>
-        </>
+        </React.Fragment>
     );
 }
