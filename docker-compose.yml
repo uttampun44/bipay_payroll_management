@@ -23,6 +23,8 @@ services:
             - sail
         depends_on:
             - mysql
+
+    #mysql service to run the database
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:

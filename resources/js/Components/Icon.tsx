@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { SVGProps } from "react";
 
 const Icons = {
-    Dashboard: (
+    dashboard: (
         <svg
             width="20"
             height="21"
@@ -36,7 +36,7 @@ const Icons = {
             </defs>
         </svg>
     ),
-    Employee: (
+    employee: (
         <svg
             width="20"
             height="21"
@@ -155,6 +155,39 @@ const Icons = {
                     />
                 </clipPath>
             </defs>
+        </svg>
+    ),
+    administration: (
+        <svg
+            width="20"
+            height="21"
+            viewBox="0 0 20 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M11.0985 6.10345L9.12879 3H3.2197C2.13186 3 1.25 3.92631 1.25 5.06897V6.10345M11.0985 6.10345H15.5303C16.6181 6.10345 17.5 7.02976 17.5 8.17241V15.931C17.5 17.0737 16.6181 18 15.5303 18H3.2197C2.13186 18 1.25 17.0737 1.25 15.931V6.10345M11.0985 6.10345H1.25"
+                stroke="#404040"
+                strokeWidth="1.50926"
+                strokeLinejoin="round"
+            />
+        </svg>
+    ),
+    department: (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="21"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-section-icon lucide-section"
+        >
+            <path d="M16 5a4 3 0 0 0-8 0c0 4 8 3 8 7a4 3 0 0 1-8 0" />
+            <path d="M8 19a4 3 0 0 0 8 0c0-4-8-3-8-7a4 3 0 0 1 8 0" />
         </svg>
     ),
 };

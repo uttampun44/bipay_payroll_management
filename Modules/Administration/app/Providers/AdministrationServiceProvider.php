@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\Administration\Providers;
+namespace Modules\Administration\app\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Administration\app\Repository\DepatmentRepository;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -36,6 +37,9 @@ class AdministrationServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(DepatmentRepository::class, function (){
+            return new DepatmentRepository();
+        });
     }
 
     /**

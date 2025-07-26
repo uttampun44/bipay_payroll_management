@@ -4,15 +4,23 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Administration\app\Repository\DepatmentRepository;
 
 class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    protected $departmentRepository;
+    
+    public function __construct(DepatmentRepository $departmentRepository)
+    {
+        $this->departmentRepository = $departmentRepository;
+    }
     public function index()
     {
-        return view('administration::index');
+       return $this->departmentRepository->index();
     }
 
     /**
