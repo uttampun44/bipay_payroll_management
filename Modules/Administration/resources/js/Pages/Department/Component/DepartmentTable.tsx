@@ -1,8 +1,29 @@
 import TextInput from "@/Components/TextInput";
+import { Button } from "@/Components/ui/button";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 
-export default function DepartmentTable() {
+type department = {
+    id: number;
+    department_name: string;
+    department_code: string;
+    description: string;
+    budget: number;
+    status: boolean;
+}
+
+type departmentProps = {
+    data: department[]
+}
+
+export default function DepartmentTable({data} : departmentProps) {
+      
+    const departmentData = Array.isArray(data) ? data : [];
+
+    const handleEdit = (id: number) => {
+       route('departments.edit', { id });
+    };
+
     return (
         <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
             <div className="text-search">
@@ -12,9 +33,8 @@ export default function DepartmentTable() {
                 <h6 className="text-black text-lg font-semibold ">Departments</h6>
             </div>
             <Table>
-               
                 <TableHeader className="bg-neutral-100">
-                    <TableRow >
+                    <TableRow>
                         <TableHead className="text-center">ID</TableHead>
                         <TableHead className="text-center">Department Name</TableHead>
                         <TableHead className="text-center">Department Code</TableHead>
@@ -22,16 +42,30 @@ export default function DepartmentTable() {
                         <TableHead className="text-center">Budget</TableHead>
                         <TableHead className="text-center">Status</TableHead>
                         <TableHead className="text-center">Edit</TableHead>
+                        
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow className="text-center">
-                        <TableCell className="p-2">1</TableCell>
-                        <TableCell className="p-2">John Doe</TableCell>
-                    </TableRow>
+                   {departmentData.map((department) => (
+                        <TableRow key={department.id} className="text-center">
+                            <TableCell className="p-2">{department.id}</TableCell>
+                            <TableCell className="p-2">{department.department_name}</TableCell>
+                            <TableCell className="p-2">{department.department_code}</TableCell>
+                            <TableCell className="p-2">{department.description}</TableCell>
+                            <TableCell className="p-2">{department.budget}</TableCell>
+                            <TableCell className="p-2">{department.status}</TableCell>
+                            <TableCell className="p-2 text-green-700">
+                                <Button
+                                 onClick={() => handleEdit(department.id)}
+                                >
+                                    Edit
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
-            <div className="pagination flex justify-end items-center">
+            {/* <div className="pagination flex justify-end items-center">
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
@@ -48,7 +82,7 @@ export default function DepartmentTable() {
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
-            </div>
+            </div> */}
         </div>
     )
 }

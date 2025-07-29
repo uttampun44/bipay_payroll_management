@@ -40,7 +40,7 @@ class DepartmentController extends Controller
     {
          try {
             $this->departmentRepository->store($request->all());
-            return redirect()->route('administration.department.index');
+            return to_route('department.index')->with('success', 'Department created successfully!');
          } catch (\Throwable $th) {
             Log::error($th->getMessage());
          }

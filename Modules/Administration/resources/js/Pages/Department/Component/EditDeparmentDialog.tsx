@@ -19,7 +19,7 @@ type DepartmentDialogProps = {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function DepartmentDialog({
+export default function EditDepartmentDialog({
     open,
     setOpen,
 }: DepartmentDialogProps) {
@@ -27,7 +27,7 @@ export default function DepartmentDialog({
         data,
         setData,
         errors,
-        post: post,
+        put: put,
         processing,
         reset,
         transform,
@@ -47,7 +47,7 @@ export default function DepartmentDialog({
         }));
 
         try {
-            post(route("departments.store"), {
+            put(route("departments.put"), {
                 onSuccess: () => {
                     setOpen(false);
                     toast.success("Department added successfully!");

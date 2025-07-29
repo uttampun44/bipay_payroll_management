@@ -112,6 +112,7 @@ export default function Login({
                             <Button
                                 type="submit"
                                 className="mt-6 w-full bg-blue-500 p-1.5 text-white rounded-md"
+                                disabled={processing}
                             >
                                 Sign In
                             </Button>

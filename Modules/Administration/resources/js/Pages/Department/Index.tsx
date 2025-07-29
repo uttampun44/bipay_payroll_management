@@ -12,10 +12,11 @@ import {
 import { Button } from "@/Components/ui/button";
 import { Head } from "@inertiajs/react";
 
-export default function DepartmentIndex() {
+export default function DepartmentIndex({ departments }: { departments: any[] }) {
+    
     const [isOpen, setOpen] = useState(false);
     const pathUrl = window.location.pathname;
-   
+
     return (
         <AuthenticatedLayout>
             <Head title="Department" />
@@ -55,7 +56,7 @@ export default function DepartmentIndex() {
                     </Button>
                 </div>
             </div>
-            <DepartmentTable />
+            <DepartmentTable data={departments} />
             <DepartmentDialog open={isOpen} setOpen={setOpen} />
         </AuthenticatedLayout>
     );
