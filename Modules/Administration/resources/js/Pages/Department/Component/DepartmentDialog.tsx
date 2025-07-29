@@ -3,40 +3,27 @@ import DangerButton from "@/Components/DangerButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from "@/Components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
 import { Textarea } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 type DepartmentDialogProps = {
-    open: boolean;
+    isEditingMode?: boolean;
+    departmentId?: number;
+    editData?: Record<string, any>;
+    isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function DepartmentDialog({
-    open,
-    setOpen,
-}: DepartmentDialogProps) {
-    const {
-        data,
-        setData,
-        errors,
-        post: post,
-        processing,
-        reset,
-        transform,
-    } = useForm({
-        department_name: "",
-        department_code: "",
-        description: "",
-        budget: "",
-        status: true,
+export default function DepartmentDialog({ isEditingMode = false, departmentId, editData, isOpen, setOpen }: DepartmentDialogProps) {
+    const { data, setData, errors, post: post, put:put, processing, reset, transform } = useForm({
+        department_name: isEditingMode ? editData?.department_name || "" : "",
+        department_code: isEditingMode ? editData?.department_code || "" : "",
+        description: isEditingMode ? editData?.description || "" : "",
+        budget: isEditingMode ? editData?.budget || "0.00" : "0.00",
+        status: isEditingMode ? editData?.status || true : true,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -47,25 +34,52 @@ export default function DepartmentDialog({
         }));
 
         try {
-            post(route("departments.store"), {
-                onSuccess: () => {
-                    setOpen(false);
-                    toast.success("Department added successfully!");
-                    reset();
-                },
-                onError: (errors) => {
-                    toast.error(
-                        "Failed to add department. Please check the errors."
-                    );
-                },
-            });
+            if (isEditingMode) {
+                put(route("departments.update", { id: departmentId }), {
+                    onSuccess: () => {
+                        setOpen(false);
+                        toast.success("Department updated successfully!");
+                        reset();
+                    },
+                    onError: (errors) => {
+                        toast.error(
+                            "Failed to update department. Please check the errors."
+                        );
+                    },
+                });
+            } else {
+                post(route("departments.store"), {
+                    onSuccess: () => {
+                        setOpen(false);
+                        toast.success("Department added successfully!");
+                        reset();
+                    },
+                    onError: (errors) => {
+                        toast.error(
+                            "Failed to add department. Please check the errors."
+                        );
+                    },
+                });
+            }
         } catch (error) {
             throw new Error("Failed to submit form: " + error);
         }
     };
 
+    useEffect(() => {
+        if (isEditingMode && editData) {
+            setData({
+                department_name: editData.department_name || "",
+                department_code: editData.department_code || "",
+                description: editData.description || "",
+                budget: editData.budget || "0.00",
+                status: editData.status || true,
+            });
+        }
+    }, [isEditingMode, editData]);
+
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogContent className="bg-white">
                 <DialogHeader>
                     <DialogTitle>Add Department</DialogTitle>

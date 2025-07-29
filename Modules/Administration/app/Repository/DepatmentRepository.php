@@ -26,13 +26,13 @@ class DepatmentRepository
     Department::create($data);
   }
 
-  public function edit(int $id)
+  public function update(int $id)
   {
     $department = Department::findOrFail($id);
      
     if(!$department->id)
     {
-      return response()->json(['message' => 'Department not found'], 404);
+      return throw new \Exception("Department not found");
     }
     return $department;
   }

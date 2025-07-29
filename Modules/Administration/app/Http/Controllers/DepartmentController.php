@@ -65,7 +65,16 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {}
+    public function update($id) 
+    {
+        try {
+            $department = $this->departmentRepository->update($id);
+            return to_route('department.index')->with('success', 'Department updated successfully!');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return back()->withErrors(['error' => 'Failed to update department']);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

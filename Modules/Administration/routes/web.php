@@ -6,5 +6,5 @@ use Modules\Administration\Http\Controllers\DepartmentController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('administrations', AdministrationController::class)->names('administration');
-    Route::resource('departments', DepartmentController::class)->only(['index', 'store', 'update', 'edit', 'destroy']);
+    Route::resource('departments', DepartmentController::class)->only(['index', 'store', 'update', 'edit', 'update', 'destroy']);
 });
