@@ -4,7 +4,9 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Administration\app\Repository\DepatmentRepository;
+use Modules\Administration\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -34,7 +36,15 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(DepartmentRequest $request) 
+    {
+         try {
+            $this->departmentRepository->store($request->all());
+            return redirect()->route('administration.department.index');
+         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+         }
+    }
 
     /**
      * Show the specified resource.

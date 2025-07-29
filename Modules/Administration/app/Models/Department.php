@@ -13,6 +13,7 @@ class Department extends Model
     /**
      * The attributes that are mass assignable.
      */
+    protected $table = 'departments';
     protected $fillable = [];
 
     // protected static function newFactory(): DepartmentFactory
