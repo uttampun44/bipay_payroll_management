@@ -40,7 +40,7 @@ class DepartmentController extends Controller
     {
          try {
             $this->departmentRepository->store($request->all());
-            return to_route('department.index')->with('success', 'Department created successfully!');
+            return to_route('departments.index')->with('success', 'Department created successfully!');
          } catch (\Throwable $th) {
             Log::error($th->getMessage());
          }
@@ -65,11 +65,11 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id) 
+    public function update(Request $request, $id)
     {
         try {
-            $department = $this->departmentRepository->update($id);
-            return to_route('department.index')->with('success', 'Department updated successfully!');
+            $department = $this->departmentRepository->update($id, $request->all());
+            return to_route('departments.index')->with('success', 'Department updated successfully!');
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             return back()->withErrors(['error' => 'Failed to update department']);

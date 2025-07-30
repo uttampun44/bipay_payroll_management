@@ -10,12 +10,17 @@ class DepatmentRepository
 {
   public function index()
   {
+    $search = request()->input('search', '');
+
+
     $departments = Department::query()
-                  ->select('id', 'department_name', 'department_code', 'description', 'budget', 'status')
-                  ->latest()
-                  ->get();
-     
-    
+                   ->select('id', 'department_name', 'department_code', 'description', 'budget', 'status')
+                   -> when($search, function ($query, $search) {
+                      return $query->whereAny(['department_name', 'department_code', 'description'], 'like', "%{$search}%");
+                       })
+                   ->latest()
+                   ->get();
+
     return Inertia::render("Administration::Department/Index", [
       'departments' => $departments,
     ]);
@@ -26,14 +31,14 @@ class DepatmentRepository
     Department::create($data);
   }
 
-  public function update(int $id)
+  public function update(int $id, array $data)
   {
     $department = Department::findOrFail($id);
-     
-    if(!$department->id)
-    {
+
+    if (!$department->id) {
       return throw new \Exception("Department not found");
     }
-    return $department;
+
+    $department->update($data);
   }
 }
