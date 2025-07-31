@@ -8,6 +8,8 @@ import DepartmentDialog from "./DepartmentDialog";
 import useDebounce from "@/hooks/useDebounce";
 import DepartmentTopNavigation from "./DepartmentTopNavigation";
 import { toast } from "sonner";
+import { Badge } from "@/Components/ui/badge";
+import Icon from "@/Components/Icon";
 
 interface Department {
     id: number;
@@ -15,7 +17,7 @@ interface Department {
     department_code: string;
     description: string;
     budget: string;
-    status: boolean;
+    status: number;
 }
 
 export default function DepartmentTable() {
@@ -148,7 +150,7 @@ export default function DepartmentTable() {
                                     Status
                                 </TableHead>
                                 <TableHead className="text-center">
-                                    Edit
+                                    Action
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -174,10 +176,14 @@ export default function DepartmentTable() {
                                         {department.budget}
                                     </TableCell>
                                     <TableCell className="p-2">
-                                        {department.status}
+                                       {department.status === 0 ? 
+                                       ( <Badge variant={"secondary"} >InActive</Badge>)
+                                      :(
+                                          <Badge variant={"info"}>Active</Badge>
+                                      )}
                                     </TableCell>
-                                    <TableCell className="p-2 text-green-700">
-                                        <Button
+                                    <TableCell className="p-2 text-green-700 text-center">
+                                        {/* <Button
                                             type="button"
                                             onClick={() => {
                                                 setEditingMode(true);
@@ -196,7 +202,8 @@ export default function DepartmentTable() {
                                             }}
                                         >
                                             Edit
-                                        </Button>
+                                        </Button> */}
+                                        <Icon iconName="action" className=" h-5" />
                                     </TableCell>
                                 </TableRow>
                             ))}
