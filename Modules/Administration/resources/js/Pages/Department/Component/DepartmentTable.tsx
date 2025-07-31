@@ -103,10 +103,7 @@ export default function DepartmentTable() {
                     </div>
                 }
             >
-                <div
-                    className="deparment-table-container px-8 py-4 bg-white rounded-md"
-                    style={{ margin: "16px 32px" }}
-                >
+                <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
                     <div className="text-search">
                         <TextInput
                             placeholder="Search"
@@ -119,15 +116,9 @@ export default function DepartmentTable() {
                                 handleSearch(e);
                             }}
                         />
-
-                    </div>
-                    <div className="departments my-3">
-                        <h6 className="text-black text-lg font-semibold ">
-                            Departments
-                        </h6>
                     </div>
 
-                    <Table>
+                    <Table className="mt-4">
                         <TableHeader className="bg-neutral-100">
                             <TableRow>
                                 <TableHead className="text-center">
@@ -175,11 +166,11 @@ export default function DepartmentTable() {
                                         {department.budget}
                                     </TableCell>
                                     <TableCell className="p-2">
-                                       {department.status === 0 ? 
-                                       ( <Badge variant={"secondary"} >InActive</Badge>)
-                                      :(
-                                          <Badge variant={"info"}>Active</Badge>
-                                      )}
+                                        {department.status === 0 ?
+                                            (<Badge variant={"secondary"} >InActive</Badge>)
+                                            : (
+                                                <Badge variant={"info"}>Active</Badge>
+                                            )}
                                     </TableCell>
                                     <TableCell className="p-2 text-green-700 text-center">
                                         <Button

@@ -34,8 +34,9 @@ export const sidebarLinks: sidebarLinksType[] = [
                 icon: "department",
             },
             {
-                name: "Position",
-                href: "/positions",
+                name: "Job Desk",
+                href: "/job-desks",
+                icon: "jobDesk",
             },
             {
                 name: "Salary",

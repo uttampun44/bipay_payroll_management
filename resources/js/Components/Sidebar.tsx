@@ -70,12 +70,12 @@ export default function Sidebar() {
                                                 <li key={subLink.name}>
                                                     <Link
                                                         href={subLink.href}
-                                                        className="flex items-center p-1 text-sm font-normal hover:bg-neutral-200 rounded-lg"
+                                                        className="flex items-start gap-x-3 p-1.5 text-sm font-normal hover:bg-neutral-200 rounded-lg"
                                                     >
                                                         {subLink.icon && (
                                                             <Icon
                                                                 iconName={subLink.icon}
-                                                                className="w-4 h-4"
+                                                                className="w-2 h-2"
                                                             />
                                                         )}
                                                         <span className="ml-2">

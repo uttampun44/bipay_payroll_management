@@ -2,7 +2,6 @@
 
 namespace Modules\Administration\app\Repository;
 
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Modules\Administration\Models\Department;
 
@@ -14,12 +13,12 @@ class DepatmentRepository
 
 
     $departments = Department::query()
-                   ->select('id', 'department_name', 'department_code', 'description', 'budget', 'status')
-                   -> when($search, function ($query, $search) {
-                      return $query->whereAny(['department_name', 'department_code', 'description'], 'like', "%{$search}%");
-                       })
-                   ->latest()
-                   ->get();
+      ->select('id', 'department_name', 'department_code', 'description', 'budget', 'status')
+      ->when($search, function ($query, $search) {
+        return $query->whereAny(['department_name', 'department_code', 'description'], 'like', "%{$search}%");
+      })
+      ->latest()
+      ->get();
 
     return Inertia::render("Administration::Department/Index", [
       'departments' => $departments,

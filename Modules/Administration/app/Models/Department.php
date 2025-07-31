@@ -20,4 +20,9 @@ class Department extends Model
     // {
     //     // return DepartmentFactory::new();
     // }
+
+    public function jobDesks()
+    {
+        return $this->hasMany(JobDesk::class, 'department_id');
+    }
 }
