@@ -89,7 +89,7 @@ export default function JobDeskForm() {
                         type="button"
                         variant={"destructive"}
                         onClick={() => {
-                            router.visit("/job-desks", { method: "get" });
+                            router.visit("/administrations/job-desks", { method: "get" });
                         }}
                     >
                         Cancel

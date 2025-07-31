@@ -37,7 +37,7 @@ export default function JobDeskTopNavigation() {
                         className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                         type="button"
                         onClick={() => {
-                           router.visit("/job-desks/create", {method: "get"});
+                           router.visit("/administrations/job-desks/create", {method: "get"});
                         }}
                     >
                         Add Job Desk

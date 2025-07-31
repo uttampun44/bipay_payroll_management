@@ -30,12 +30,12 @@ export const sidebarLinks: sidebarLinksType[] = [
         subNavigation: [
             {
                 name: "Department",
-                href: "/departments",
+                href: "/administrations/departments",
                 icon: "department",
             },
             {
                 name: "Job Desk",
-                href: "/job-desks",
+                href: "/administrations/job-desks",
                 icon: "jobDesk",
             },
             {
@@ -52,13 +52,38 @@ export const sidebarLinks: sidebarLinksType[] = [
         subNavigation: [
             {
                 name: "All Employee",
-                href: "/employees",
+                href: "/employees/employees",
             },
             {
                 name: "Appointment",
-                href: "/appointments",
+                href: "/employees/appointments",
                 icon: "appointment",
+            },
+            {
+                name: "Attendance",
+                href: "/attendances",
+                icon: "attendance",
             }
         ],
     },
+    {
+        id: 4,
+        moduleName: "Settings",
+        name: "Settings",
+        href: "#",
+        icon: "settings",
+        subNavigation: [
+            {
+                name: "Role",
+                href: "/roles",
+                icon: "department",
+            },
+            {
+                name: "Permission",
+                href: "/permissions",
+                icon: "jobDesk",
+            },
+            
+        ],
+    }
 ];
