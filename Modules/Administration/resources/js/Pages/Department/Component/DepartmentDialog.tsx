@@ -1,5 +1,6 @@
 import Checkbox from "@/Components/Checkbox";
 import DangerButton from "@/Components/DangerButton";
+import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
@@ -18,7 +19,7 @@ type DepartmentDialogProps = {
 };
 
 export default function DepartmentDialog({ isEditingMode = false, departmentId, editData, isOpen, setOpen }: DepartmentDialogProps) {
-    const { data, setData, errors, post: post, put:put, processing, reset, transform } = useForm({
+    const { data, setData, errors, post: post, put: put, processing, reset, transform } = useForm({
         department_name: isEditingMode ? editData?.department_name || "" : "",
         department_code: isEditingMode ? editData?.department_code || "" : "",
         description: isEditingMode ? editData?.description || "" : "",
@@ -107,11 +108,10 @@ export default function DepartmentDialog({ isEditingMode = false, departmentId, 
                                         )
                                     }
                                 />
-                                {errors.department_name && (
-                                    <div className="text-red-500 text-sm mt-1">
-                                        {errors.department_name}
-                                    </div>
-                                )}
+                                <InputError
+                                    message={errors.department_name}
+                                    className="mt-1"
+                                />
                             </div>
                             <div className="mt-4">
                                 <InputLabel
@@ -130,11 +130,10 @@ export default function DepartmentDialog({ isEditingMode = false, departmentId, 
                                         )
                                     }
                                 />
-                                {errors.department_code && (
-                                    <div className="text-red-500 text-sm mt-1">
-                                        {errors.department_code}
-                                    </div>
-                                )}
+                                <InputError
+                                    message={errors.department_code}
+                                    className="mt-1"
+                                />
                             </div>
 
                             <div className="mt-4">
@@ -151,11 +150,10 @@ export default function DepartmentDialog({ isEditingMode = false, departmentId, 
                                     }
                                     rows={3}
                                 />
-                                {errors.description && (
-                                    <div className="text-red-500 text-sm mt-1">
-                                        {errors.description}
-                                    </div>
-                                )}
+                                <InputError
+                                    message={errors.description}
+                                    className="mt-1"
+                                />
                             </div>
 
                             <div className="mt-4">
@@ -170,11 +168,10 @@ export default function DepartmentDialog({ isEditingMode = false, departmentId, 
                                         setData("budget", e.target.value)
                                     }
                                 />
-                                {errors.budget && (
-                                    <div className="text-red-500 text-sm mt-1">
-                                        {errors.budget}
-                                    </div>
-                                )}
+                                <InputError
+                                    message={errors.budget}
+                                    className="mt-1"
+                                />
                             </div>
 
                             <div className="mt-4">
@@ -189,11 +186,10 @@ export default function DepartmentDialog({ isEditingMode = false, departmentId, 
                                         )
                                     }
                                 />
-                                {errors.status && (
-                                    <div className="text-red-500 text-sm mt-1">
-                                        {errors.status}
-                                    </div>
-                                )}
+                                <InputError
+                                    message={errors.status}
+                                    className="mt-1"
+                                />
                             </div>
 
                             <div className="button flex gap-x-4">

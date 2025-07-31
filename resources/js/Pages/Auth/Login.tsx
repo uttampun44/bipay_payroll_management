@@ -1,4 +1,4 @@
-import { Button} from "@headlessui/react";
+import { Button } from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import React, { FormEventHandler } from "react";
 import Header from "@/Components/Header";
@@ -6,19 +6,22 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import { toast } from "sonner";
+import useToggle from "@/hooks/useToggle";
+import Icon from "@/Components/Icon";
 
 export default function Login({
     status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
+    canResetPassword }: {
+        status?: string;
+        canResetPassword: boolean;
+    }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
         remember: false as boolean,
     });
+
+    const { isToggle, setToggle } = useToggle(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -63,7 +66,7 @@ export default function Login({
                             <div className="space-y-4">
                                 <div className="mt-4">
                                     <InputLabel
-                                        htmlFor="password"
+                                        htmlFor="email"
                                         value="Email"
                                     />
                                     <TextInput
@@ -72,22 +75,20 @@ export default function Login({
                                         name="email"
                                         value={data.email}
                                         className="mt-1 block w-full"
-                                        autoComplete="new-password"
                                         onChange={(e) =>
                                             setData("email", e.target.value)
                                         }
                                         required
                                     />
                                 </div>
-                                <div className="mt-4">
+                                <div className="mt-4 relative">
                                     <InputLabel
                                         htmlFor="password"
                                         value="Password"
                                     />
-
                                     <TextInput
                                         id="password"
-                                        type="password"
+                                        type={isToggle ? "text" : "password"}
                                         name="password"
                                         value={data.password}
                                         className="mt-1 block w-full"
@@ -97,7 +98,21 @@ export default function Login({
                                         }
                                         required
                                     />
-
+                                    {
+                                        isToggle ? (
+                                            <Icon
+                                                iconName="passwordHidden"
+                                                className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setToggle(!isToggle)}
+                                            />
+                                        ) : (
+                                             <Icon
+                                                iconName="passwordVisibility"
+                                                className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setToggle(!isToggle)}
+                                            />
+                                        )
+                                    }
                                     <InputError
                                         message={errors.password}
                                         className="mt-2"

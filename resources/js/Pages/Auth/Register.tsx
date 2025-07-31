@@ -1,8 +1,10 @@
 import Header from "@/Components/Header";
+import Icon from "@/Components/Icon";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import useToggle from "@/hooks/useToggle";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Input } from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -15,6 +17,8 @@ export default function Register() {
         password: "",
         password_confirmation: "",
     });
+
+    const { isToggle, setToggle } = useToggle(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -72,9 +76,10 @@ export default function Register() {
                                         }
                                         required
                                     />
+                                   
                                 </div>
                             </div>
-                            <div className="mt-4">
+                            <div className="mt-4 relative">
                                 <InputLabel
                                     htmlFor="password"
                                     value="Password"
@@ -82,7 +87,7 @@ export default function Register() {
 
                                 <TextInput
                                     id="password"
-                                    type="password"
+                                    type={isToggle ? "text" : "password"}
                                     name="password"
                                     value={data.password}
                                     className="mt-1 block w-full"
@@ -92,14 +97,28 @@ export default function Register() {
                                     }
                                     required
                                 />
-
+                                 {
+                                    isToggle ? (
+                                        <Icon
+                                            iconName="passwordHidden"
+                                            className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                            onClick={() => setToggle(!isToggle)}
+                                        />
+                                    ) : (
+                                        <Icon
+                                            iconName="passwordVisibility"
+                                            className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                            onClick={() => setToggle(!isToggle)}
+                                        />
+                                    )
+                                }
                                 <InputError
                                     message={errors.password}
                                     className="mt-2"
                                 />
                             </div>
 
-                            <div className="mt-4">
+                            <div className="mt-4 relative">
                                 <InputLabel
                                     htmlFor="password_confirmation"
                                     value="Confirm Password"
