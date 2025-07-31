@@ -9,7 +9,6 @@ import useDebounce from "@/hooks/useDebounce";
 import DepartmentTopNavigation from "./DepartmentTopNavigation";
 import { toast } from "sonner";
 import { Badge } from "@/Components/ui/badge";
-import Icon from "@/Components/Icon";
 
 interface Department {
     id: number;
@@ -183,7 +182,7 @@ export default function DepartmentTable() {
                                       )}
                                     </TableCell>
                                     <TableCell className="p-2 text-green-700 text-center">
-                                        {/* <Button
+                                        <Button
                                             type="button"
                                             onClick={() => {
                                                 setEditingMode(true);
@@ -202,8 +201,7 @@ export default function DepartmentTable() {
                                             }}
                                         >
                                             Edit
-                                        </Button> */}
-                                        <Icon iconName="action" className=" h-5" />
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
