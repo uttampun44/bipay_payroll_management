@@ -102,7 +102,7 @@ export default function Login({
                                         isToggle ? (
                                             <Icon
                                                 iconName="passwordHidden"
-                                                className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                                className="absolute right-1 -top-1/2  text-gray-400 cursor-pointer"
                                                 onClick={() => setToggle(!isToggle)}
                                             />
                                         ) : (

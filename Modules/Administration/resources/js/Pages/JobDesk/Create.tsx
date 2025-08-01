@@ -1,6 +1,7 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import JobDeskForm from "./Component/JobDeskForm";
+import DangerButton from "@/Components/DangerButton";
 
 export default function Create() {
 
@@ -8,7 +9,7 @@ export default function Create() {
 
     return (
         <Authenticated>
-            <div className="breadCrumb mb-4 mt-4 ">
+            <div className="breadCrumb mb-4 mt-4 flex justify-between items-center">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -27,12 +28,19 @@ export default function Create() {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
+                <DangerButton
+                    onClick={() => {
+                        window.history.back();
+                    }}
+                >
+                    Back
+                </DangerButton>
             </div>
             <div className="rounded-md bg-white shadow-md p-6">
                 <h2 className="text-2xl font-semibold text-gray-800">
                     Create Job Desk
                 </h2>
-              <JobDeskForm />
+                <JobDeskForm />
             </div>
         </Authenticated>
     )

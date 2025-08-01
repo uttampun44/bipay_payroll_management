@@ -5,8 +5,6 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import useToggle from "@/hooks/useToggle";
-import GuestLayout from "@/Layouts/GuestLayout";
-import { Input } from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
