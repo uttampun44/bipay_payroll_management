@@ -3,25 +3,31 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
-import { router, useForm } from "@inertiajs/react";
-import Quill from "quill";
+import { router, useForm, usePage } from "@inertiajs/react";
 import 'react-quill/dist/quill.snow.css';
-import { useState } from "react";
 import ReactQuill from 'react-quill';
+import InputError from "@/Components/InputError";
+import { toast } from "sonner";
+
+type departmentType = {
+    id: number;
+    department_name: string;
+}
 
 export default function JobDeskForm() {
 
-    const { post: post, data, setData, errors, transform } = useForm({
+    const departmentsData = usePage().props.departments as departmentType[];
+
+    const { post: post, data, setData, errors, processing} = useForm({
         job_title: "",
         job_code: "",
+        department_name: "",
         job_description: "",
         min_salary: "",
         max_salary: "",
         job_requirements: "",
         job_responsibilities: "",
     });
-
-    const [jobDescription, setJobDescription] = useState("");
 
     const modules = {
         toolbar: [
@@ -40,27 +46,49 @@ export default function JobDeskForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        try {
+            post(route("job-desks.store"), {
+                onSuccess: () => {
+                    toast.success("Job Desk Created Successfully");
+                },
+                onError: () => {
+                    toast.error("Job Desk Creation Failed");
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+        e.preventDefault();
     }
 
     return (
-        <div className="grid-form">
+        <div className="grid-form overflow-auto  p-4 sm:p-6 md:p-8">
             <form onSubmit={handleSubmit}>
-                <div className="space-y-4 form-control grid lg:grid-cols-3 grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div className="department mt-4">
                         <InputLabel
                             htmlFor="department"
                             value="Department"
                         />
-                        <Select>
+                        <Select name="department_name"
+                         onValueChange={(value) =>{
+                            setData('department_name', value);
+                         }}
+                         value={data.department_name}
+                        >
                             <SelectTrigger className="">
-                                <SelectValue placeholder="Theme" />
+                                <SelectValue placeholder="Select Department" />
                             </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
+                            <SelectContent className="mt-1">
+                                {departmentsData.map((department) => (
+                                    <SelectItem 
+                                    key={department.id} value={department.department_name}>{department.department_name}</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
+                        <InputError
+                            message={errors.department_name}
+                        />
                     </div>
 
                     <div className="job-title mt-4">
@@ -75,8 +103,11 @@ export default function JobDeskForm() {
                             placeholder="Enter Job Title"
                             autoComplete="off"
                             onChange={(e) => {
-
+                                setData('job_title', e.target.value);
                             }}
+                        />
+                        <InputError
+                            message={errors.job_title}
                         />
                     </div>
                     <div className="job-code mt-4">
@@ -91,8 +122,11 @@ export default function JobDeskForm() {
                             placeholder="Enter Job Code"
                             autoComplete="off"
                             onChange={(e) => {
-
+                                setData('job_code', e.target.value);
                             }}
+                        />
+                        <InputError
+                            message={errors.job_code}
                         />
                     </div>
                     <div className="minimum_salary">
@@ -107,8 +141,11 @@ export default function JobDeskForm() {
                             placeholder="Enter Minimum Salary"
                             autoComplete="off"
                             onChange={(e) => {
-
+                                setData('min_salary', e.target.value);
                             }}
+                        />
+                        <InputError
+                            message={errors.min_salary}
                         />
                     </div>
                     <div className="maximum_salary">
@@ -117,14 +154,17 @@ export default function JobDeskForm() {
                             value="Maximum Salary"
                         />
                         <TextInput
-                            type="text"
+                            type="number"
                             name="max_salary"
                             className="mt-1 block w-full"
                             placeholder="Enter Maximum Salary"
                             autoComplete="off"
                             onChange={(e) => {
-
+                                setData('max_salary', e.target.value);
                             }}
+                        />
+                        <InputError
+                            message={errors.max_salary}
                         />
                     </div>
                     <div className="job-description">
@@ -138,7 +178,10 @@ export default function JobDeskForm() {
                             onChange={(content) => setData('job_description', content)}
                             modules={modules}
                             formats={formats}
-                            className="h-32 mb-12" 
+                             className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
+                        />
+                        <InputError
+                            message={errors.job_description}
                         />
                     </div>
                     <div className="job-requirement">
@@ -152,7 +195,10 @@ export default function JobDeskForm() {
                             onChange={(content) => setData('job_requirements', content)}
                             modules={modules}
                             formats={formats}
-                            className="h-32 mb-12"
+                             className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
+                        />
+                        <InputError
+                            message={errors.job_requirements}
                         />
                     </div>
                     <div className="job-responsiblities">
@@ -166,12 +212,15 @@ export default function JobDeskForm() {
                             onChange={(content) => setData('job_responsibilities', content)}
                             modules={modules}
                             formats={formats}
-                            className="h-32 mb-12"
+                            className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
+                        />
+                        <InputError
+                            message={errors.job_responsibilities}
                         />
                     </div>
                 </div>
 
-                <div className="button-form flex gap-x-4">
+                <div className="button-form flex gap-x-4 mb-4">
                     <Button
                         className="mt-4 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                         type="submit"
@@ -179,6 +228,7 @@ export default function JobDeskForm() {
                         onClick={() => {
                             post("/job-desks/store");
                         }}
+                        disabled={processing}
                     >
                         Submit
                     </Button>

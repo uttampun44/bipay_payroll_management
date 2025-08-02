@@ -98,21 +98,24 @@ export default function Login({
                                         }
                                         required
                                     />
+                                    <div className="toggle absolute right-1 top-1/2 ">
+
                                     {
                                         isToggle ? (
                                             <Icon
                                                 iconName="passwordHidden"
-                                                className="absolute right-1 -top-1/2  text-gray-400 cursor-pointer"
+                                                className=" text-gray-400 cursor-pointer"
                                                 onClick={() => setToggle(!isToggle)}
                                             />
                                         ) : (
                                              <Icon
                                                 iconName="passwordVisibility"
-                                                className="absolute right-2 top-1/2 text-gray-400 cursor-pointer"
+                                                className=" text-gray-400 cursor-pointer"
                                                 onClick={() => setToggle(!isToggle)}
                                             />
                                         )
                                     }
+                                    </div>
                                     <InputError
                                         message={errors.password}
                                         className="mt-2"

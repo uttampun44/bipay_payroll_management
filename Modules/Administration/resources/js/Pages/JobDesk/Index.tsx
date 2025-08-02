@@ -6,7 +6,6 @@ export default function Index() {
     return (
         <Authenticated>
             <JobDeskTopNavigation />
-            
             <JobDeskTable />
         </Authenticated>
     )
