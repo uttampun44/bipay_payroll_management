@@ -4,6 +4,7 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Administration\app\Repository\JobDeskRepository;
 use Modules\Administration\Http\Requests\JobDeskRequest;
 
@@ -37,8 +38,7 @@ class JobDeskController extends Controller
     public function store(JobDeskRequest $request) 
     {
       try {
-        $this->jobsDeskRepository->store($request->validated());
-        return redirect()->route('administration.job-desks.index');
+        return $this->jobsDeskRepository->store($request->validated());
       } catch (\Throwable $th) {
         throw new \Exception("Failed to create job desk: " . $th->getMessage());
       }

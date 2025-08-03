@@ -9,7 +9,7 @@ export default function TopNavigation() {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="navigation bg-white px-12 py-3 fixed top-0 w-full">
+        <div className="navigation bg-white px-12 py-3 fixed top-0 w-full z-50">
             <div className="flex justify-between items-center">
                 <Link href={route("dashboard")}>
                     <div className="logo flex items-center gap-x-4 text-lg font-semibold">

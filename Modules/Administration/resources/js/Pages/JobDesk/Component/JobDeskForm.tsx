@@ -4,13 +4,14 @@ import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import { router, useForm, usePage } from "@inertiajs/react";
-import 'react-quill/dist/quill.snow.css';
-import ReactQuill from 'react-quill';
 import InputError from "@/Components/InputError";
 import { toast } from "sonner";
+import ReactQuill from "react-quill";
+import { formats, modules } from "@/types/reactquillConfig";
+import { JobDeskFormData } from "../types/jobdesk";
 
 type departmentType = {
-    id: number;
+    id: number | string;
     department_name: string;
 }
 
@@ -18,38 +19,25 @@ export default function JobDeskForm() {
 
     const departmentsData = usePage().props.departments as departmentType[];
 
-    const { post: post, data, setData, errors, processing} = useForm({
+    const { post: post, data, setData, errors, processing, resetAndClearErrors } = useForm<JobDeskFormData>({
+        department_id: "",
         job_title: "",
         job_code: "",
-        department_name: "",
         job_description: "",
-        min_salary: "",
-        max_salary: "",
+        minimum_salary: "",
+        maximum_salary: "",
         job_requirements: "",
         job_responsibilities: "",
     });
 
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['clean']
-        ],
-    };
-
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike',
-        'list', 'bullet'
-    ];
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            console.log(data);
             post(route("job-desks.store"), {
                 onSuccess: () => {
                     toast.success("Job Desk Created Successfully");
+                    resetAndClearErrors();
                 },
                 onError: () => {
                     toast.error("Job Desk Creation Failed");
@@ -58,7 +46,6 @@ export default function JobDeskForm() {
         } catch (error) {
             throw error;
         }
-        e.preventDefault();
     }
 
     return (
@@ -71,23 +58,23 @@ export default function JobDeskForm() {
                             value="Department"
                         />
                         <Select name="department_name"
-                         onValueChange={(value) =>{
-                            setData('department_name', value);
-                         }}
-                         value={data.department_name}
+                            onValueChange={(value) => {
+                                setData('department_id', value);
+                            }}
+                            value={String(data.department_id)}
                         >
                             <SelectTrigger className="">
                                 <SelectValue placeholder="Select Department" />
                             </SelectTrigger>
                             <SelectContent className="mt-1">
                                 {departmentsData.map((department) => (
-                                    <SelectItem 
-                                    key={department.id} value={department.department_name}>{department.department_name}</SelectItem>
+                                    <SelectItem
+                                        key={department.id} value={String(department.id)}>{department.department_name}</SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>
                         <InputError
-                            message={errors.department_name}
+                            message={errors.department_id}
                         />
                     </div>
 
@@ -131,21 +118,22 @@ export default function JobDeskForm() {
                     </div>
                     <div className="minimum_salary">
                         <InputLabel
-                            htmlFor="min_salary"
+                            htmlFor="minimum_salary"
                             value="Minimum Salary"
                         />
                         <TextInput
                             type="number"
-                            name="min_salary"
+                            name="minimum_salary"
                             className="mt-1 block w-full"
                             placeholder="Enter Minimum Salary"
                             autoComplete="off"
                             onChange={(e) => {
-                                setData('min_salary', e.target.value);
+                                const value = e.target.value;
+                                setData('minimum_salary', value ? Number(value) : value);
                             }}
                         />
                         <InputError
-                            message={errors.min_salary}
+                            message={errors.minimum_salary}
                         />
                     </div>
                     <div className="maximum_salary">
@@ -155,16 +143,17 @@ export default function JobDeskForm() {
                         />
                         <TextInput
                             type="number"
-                            name="max_salary"
+                            name="maximum_salary"
                             className="mt-1 block w-full"
                             placeholder="Enter Maximum Salary"
                             autoComplete="off"
                             onChange={(e) => {
-                                setData('max_salary', e.target.value);
+                                const value = e.target.value;
+                                setData('maximum_salary', value ? Number(value) : value);
                             }}
                         />
                         <InputError
-                            message={errors.max_salary}
+                            message={errors.maximum_salary}
                         />
                     </div>
                     <div className="job-description">
@@ -173,12 +162,10 @@ export default function JobDeskForm() {
                             value="Job Description"
                         />
                         <ReactQuill
-                            theme="snow"
+                            formats={formats}
+                            modules={modules}
                             value={data.job_description}
                             onChange={(content) => setData('job_description', content)}
-                            modules={modules}
-                            formats={formats}
-                             className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
                         />
                         <InputError
                             message={errors.job_description}
@@ -190,12 +177,10 @@ export default function JobDeskForm() {
                             value="Job Requirements"
                         />
                         <ReactQuill
-                            theme="snow"
+                            formats={formats}
+                            modules={modules}
                             value={data.job_requirements}
                             onChange={(content) => setData('job_requirements', content)}
-                            modules={modules}
-                            formats={formats}
-                             className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
                         />
                         <InputError
                             message={errors.job_requirements}
@@ -207,12 +192,10 @@ export default function JobDeskForm() {
                             value="Job Responsibilities"
                         />
                         <ReactQuill
-                            theme="snow"
+                            formats={formats}
+                            modules={modules}
                             value={data.job_responsibilities}
                             onChange={(content) => setData('job_responsibilities', content)}
-                            modules={modules}
-                            formats={formats}
-                            className="min-h-[8rem] max-h-[20rem] border border-gray-300 rounded-lg mb-4"
                         />
                         <InputError
                             message={errors.job_responsibilities}
@@ -225,9 +208,6 @@ export default function JobDeskForm() {
                         className="mt-4 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                         type="submit"
                         variant={"default"}
-                        onClick={() => {
-                            post("/job-desks/store");
-                        }}
                         disabled={processing}
                     >
                         Submit

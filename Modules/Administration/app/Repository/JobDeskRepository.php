@@ -3,21 +3,30 @@
 namespace Modules\Administration\app\Repository;
 
 use Inertia\Inertia;
-use Modules\Administration\Models\Department;
-use Modules\Administration\Models\JobDesk;
+use Modules\Administration\app\Models\Department;
+use Modules\Administration\app\Models\JobDesk;
 
 class JobDeskRepository
 {
     public function index()
     {
-
-        return Inertia::render("Administration::JobDesk/Index");
+        // load the relationship with specific columns and no extra space
+         $jobDesks = JobDesk::query()
+                          ->with(['department:id,department_name'])
+                          ->select(['id', 'job_title', 'job_code', 'job_description',
+                           'minimum_salary', 'maximum_salary', 'job_requirements', 
+                           'job_responsibilities', 'department_id'])
+                           ->paginate(15);
+        
+        return Inertia::render("Administration::JobDesk/Index", [
+            'jobDesks' => $jobDesks,
+        ]);
     }
 
     public function create()
     {
         $departments = Department::query()
-            ->select('department_name')->get();
+            ->select('id', 'department_name')->get();
             
         return Inertia::render("Administration::JobDesk/Create", [
             'departments' => $departments,

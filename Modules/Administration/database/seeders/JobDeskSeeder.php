@@ -3,8 +3,9 @@
 namespace Modules\Administration\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Administration\app\Models\JobDesk;
 
-class AdministrationDatabaseSeeder extends Seeder
+class JobDeskSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +13,6 @@ class AdministrationDatabaseSeeder extends Seeder
     public function run(): void
     {
         // $this->call([]);
-        $this->call(JobDeskSeeder::class);
+       JobDesk::factory()->count(100)->create();
     }
 }
