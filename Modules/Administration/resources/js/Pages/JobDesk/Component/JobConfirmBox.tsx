@@ -27,9 +27,9 @@ export default function JobConfirmBox({ id }: jobDeskDeleteProps) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <DangerButton
+                    <AlertDialogAction
                     onClick={() => handleDelete(id)}
-                    >Delete</DangerButton>
+                    >Delete</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
