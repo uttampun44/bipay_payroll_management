@@ -63,11 +63,10 @@ class JobDeskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(JobDeskRequest $request, $id)
     {
       try {
-            $this->jobsDeskRepository->update($id, $request->validated());
-            return redirect()->route('administration.job-desks.index');
+          return  $this->jobsDeskRepository->update($id, $request->validated());
       } catch (\Throwable $th) {
         throw new \Exception("Failed to update job desk: " . $th->getMessage());
       }
@@ -79,8 +78,7 @@ class JobDeskController extends Controller
     public function destroy($id) 
     {
         try {
-            $this->jobsDeskRepository->destroy($id);
-            return redirect()->route('administration.job-desks.index');
+            return $this->jobsDeskRepository->destroy($id);
         } catch (\Throwable $th) {
             throw new \Exception("Failed to delete job desk: " . $th->getMessage());
         }

@@ -40,4 +40,15 @@ class DepatmentRepository
 
     $department->update($data);
   }
+
+  public function destroy(int $id)
+  {
+    $department = Department::findOrFail($id);
+
+    if (!$department->id) {
+      return throw new \Exception("Department not found");
+    }
+
+    $department->delete();
+  }
 }

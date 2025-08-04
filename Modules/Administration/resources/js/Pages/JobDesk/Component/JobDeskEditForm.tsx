@@ -5,35 +5,39 @@ import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import { formats, modules } from "@/types/reactquillConfig";
-import { router, useForm } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 import ReactQuill from "react-quill";
 import { toast } from "sonner";
+import { jobDesks } from "../types/jobdesk";
 
 type departmentEditProps = {
-    id: number;
     departmentsData: {
         id: number;
         department_name: string;
     }[];
 }
 
-export default function JobDeskEditForm({ id, departmentsData }: departmentEditProps) {
+export default function JobDeskEditForm({ departmentsData }: departmentEditProps) {
+
+    const jobDesk = usePage().props.jobDesk as jobDesks;
+
     const { data, setData, errors, processing, resetAndClearErrors, put:put } = useForm({
-        department_id: "",
-        job_title: "",
-        job_code: "",
-        job_description: "",
-        minimum_salary: "",
-        maximum_salary: "",
-        job_requirements: "",
-        job_responsibilities: "",
+        department_id: jobDesk.department.id,
+        job_title: jobDesk.job_title,
+        job_code: jobDesk.job_code,
+        job_description: jobDesk.job_description,
+        minimum_salary: jobDesk.minimum_salary,
+        maximum_salary: jobDesk.maximum_salary,
+        job_requirements: jobDesk.job_requirements,
+        job_responsibilities: jobDesk.job_responsibilities,
     });
+    
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log(data);
-            put(route("job-desks.update", { id: id }), {
+          
+            put(route("job-desks.update", { id: jobDesk.id }), {
                 onSuccess: () => {
                     toast.success("Job Desk Updated Successfully");
                     resetAndClearErrors();
@@ -87,6 +91,7 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                             className="mt-1 block w-full"
                             placeholder="Enter Job Title"
                             autoComplete="off"
+                            defaultValue={jobDesk.job_title}
                             onChange={(e) => {
                                 setData('job_title', e.target.value);
                             }}
@@ -106,6 +111,7 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                             className="mt-1 block w-full"
                             placeholder="Enter Job Code"
                             autoComplete="off"
+                            defaultValue={jobDesk.job_code}
                             onChange={(e) => {
                                 setData('job_code', e.target.value);
                             }}
@@ -125,9 +131,10 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                             className="mt-1 block w-full"
                             placeholder="Enter Minimum Salary"
                             autoComplete="off"
+                            defaultValue={jobDesk.minimum_salary}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setData('minimum_salary', value ? Number(value) : value);
+                                setData('minimum_salary', Number(value) ? Number(value) : 0.00);
                             }}
                         />
                         <InputError
@@ -145,9 +152,10 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                             className="mt-1 block w-full"
                             placeholder="Enter Maximum Salary"
                             autoComplete="off"
+                            defaultValue={jobDesk.maximum_salary}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setData('maximum_salary', value ? Number(value) : value);
+                                setData('maximum_salary', Number(value) ? Number(value) : 0.00);
                             }}
                         />
                         <InputError
@@ -162,7 +170,7 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                         <ReactQuill
                             formats={formats}
                             modules={modules}
-                            value={data.job_description}
+                            defaultValue={jobDesk.job_description}
                             onChange={(content) => setData('job_description', content)}
                         />
                         <InputError
@@ -177,7 +185,7 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                         <ReactQuill
                             formats={formats}
                             modules={modules}
-                            value={data.job_requirements}
+                            defaultValue={jobDesk.job_requirements}
                             onChange={(content) => setData('job_requirements', content)}
                         />
                         <InputError
@@ -192,7 +200,7 @@ export default function JobDeskEditForm({ id, departmentsData }: departmentEditP
                         <ReactQuill
                             formats={formats}
                             modules={modules}
-                            value={data.job_responsibilities}
+                            defaultValue={jobDesk.job_responsibilities}
                             onChange={(content) => setData('job_responsibilities', content)}
                         />
                         <InputError

@@ -14,6 +14,7 @@ import { viewJobsDetails } from "../types/viewjobsdetails";
 import JobViewDialog from "./JobViewDialog";
 import DangerButton from "@/Components/DangerButton";
 import { Skeleton } from "@/Components/ui/skeleton";
+import JobConfirmBox from "./JobConfirmBox";
 
 export default function JobDeskTable() {
 
@@ -171,18 +172,10 @@ export default function JobDeskTable() {
                                                                     Edit Job Desk
                                                                 </Link>
                                                             </Button>
-                                                            <DangerButton
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                            }}
-                                                            >
-                                                                <Link
-                                                                    href={`/job-desk/${jobDesk.id}/delete`}
-                                                                    className="text-sm"
-                                                                >
-                                                                    Delete Job Desk
-                                                                </Link>
-                                                            </DangerButton>
+
+                                                           <JobConfirmBox
+                                                             id={jobDesk.id}
+                                                           />
                                                         </div>
                                                     </PopoverContent>
                                                 </Popover>

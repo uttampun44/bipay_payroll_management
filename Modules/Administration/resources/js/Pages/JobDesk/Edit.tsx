@@ -9,14 +9,11 @@ type departmentType = {
     department_name: string;
 }
 export default function Edit() {
-    
+
     const departmentsData = usePage().props.departments as departmentType[];
     const pathUrl = window.location.pathname;
 
-   const jobDeskId = usePage().props.jobDesk.id;
 
-   console.log(usePage().props);
-    
     return (
         <Authenticated>
             <div className="breadCrumb mb-4 mt-4 flex justify-between items-center">
@@ -46,15 +43,14 @@ export default function Edit() {
                     Back
                 </DangerButton>
             </div>
-             <div className="rounded-md bg-white shadow-md p-6">
+            <div className="rounded-md bg-white shadow-md p-6">
                 <h2 className="text-2xl font-semibold text-gray-800">
                     Update Job Desk
                 </h2>
-            <JobDeskEditForm
-                id={jobDeskId}
-                departmentsData={departmentsData}
-            />
-             </div>    
+                <JobDeskEditForm
+                    departmentsData={departmentsData}
+                />
+            </div>
         </Authenticated>
     )
 }
