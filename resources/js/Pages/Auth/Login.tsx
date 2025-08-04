@@ -39,7 +39,7 @@ export default function Login({
             <Head title="Log in" />
             <Header />
 
-            <section className="bg-[#F0F4FC] min-h-screen  flex items-center justify-center">
+            <section className="bg-[#F0F4FC] pt-48 pb-[165px] flex items-center justify-center">
                 <div className="container max-w-[1440px] mx-auto px-4 flex flex-col lg:flex-row items-center gap-y-10 lg:gap-x-20">
                     <div className="w-full lg:w-[70%] flex flex-col items-center text-center gap-6">
                         <h1 className="text-3xl md:text-4xl font-bold">

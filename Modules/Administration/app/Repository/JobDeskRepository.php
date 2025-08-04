@@ -40,7 +40,16 @@ class JobDeskRepository
 
     public function edit(int $id)
     {
-        return Inertia::render("Administration::JobDesk/Edit");
+         $departments = Department::query()
+            ->select('id', 'department_name')->get();
+
+        $jobDesk = JobDesk::with(['department:id,department_name'])->findOrFail($id);
+
+        return Inertia::render("Administration::JobDesk/Edit", [
+            'departments' => $departments,
+            'jobDesk' => $jobDesk,
+        ]);
+
     }
 
     public function update(int $id, array $data)

@@ -18,8 +18,8 @@
     </head>
     <body class="font-sans antialiased">
     <vapi-widget
-  public-key="f5c940a8-2ee5-4a25-b98c-c6e5bdca09a1"
-  assistant-id="1d298765-85b1-481a-8c6c-db6271bc3d62"
+  public-key={{ env('VAPI_PUBLIC_KEY') }}
+  assistant-id={{ env('VAPI_ASSITANT_ID') }}
   mode="voice"
   theme="dark"
   base-bg-color="#000000"

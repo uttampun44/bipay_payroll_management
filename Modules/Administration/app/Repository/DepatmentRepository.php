@@ -3,7 +3,7 @@
 namespace Modules\Administration\app\Repository;
 
 use Inertia\Inertia;
-use Modules\Administration\Models\Department;
+use Modules\Administration\app\Models\Department;
 
 class DepatmentRepository
 {
