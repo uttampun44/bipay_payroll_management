@@ -40,7 +40,8 @@ export const sidebarLinks: sidebarLinksType[] = [
             },
             {
                 name: "Shift",
-                href: "/administration/shifts",
+                href: "/administrations/shifts",
+                icon: "shift",
             },
         ],
     },
