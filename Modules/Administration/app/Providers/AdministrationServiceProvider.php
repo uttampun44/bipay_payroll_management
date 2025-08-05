@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Modules\Administration\app\Repository\DepatmentRepository;
 use Modules\Administration\app\Repository\JobDeskRepository;
+use Modules\Administration\app\Repository\ShiftRepository;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -43,6 +44,9 @@ class AdministrationServiceProvider extends ServiceProvider
         });
         $this->app->bind(JobDeskRepository::class, function (){
             return new JobDeskRepository();
+        });
+        $this->app->bind(ShiftRepository::class, function(){
+            return new ShiftRepository();
         });
     }
 

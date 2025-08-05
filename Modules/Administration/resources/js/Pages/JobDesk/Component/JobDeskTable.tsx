@@ -1,11 +1,11 @@
-// @ts-nocheck
+
 import Icon from "@/Components/Icon";
 import TextInput from "@/Components/TextInput";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 import useDebounce from "@/hooks/useDebounce";
-import { Link, usePage, WhenVisible } from "@inertiajs/react";
-import React, { useRef, useState } from "react";
+import { Link, router, usePage, WhenVisible } from "@inertiajs/react";
+import React, { useEffect, useRef, useState } from "react";
 import { jobDesks } from "../types/jobdesk";
 import { striptag } from "@/utils/striptag";
 import { Button } from "@/Components/ui/button";
@@ -13,17 +13,23 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover
 import { viewJobsDetails } from "../types/viewjobsdetails";
 import JobViewDialog from "./JobViewDialog";
 import DangerButton from "@/Components/DangerButton";
-import { Skeleton } from "@/Components/ui/skeleton";
 import JobConfirmBox from "./JobConfirmBox";
+import JobTableSkeleton from "./JobTableSkeleton";
+import JobDeskPagination from "./JobDeskPagination";
 
 export default function JobDeskTable() {
 
-    const [search, setSearch] = useState("");
+    const filters = usePage().props.filters
+
+    // @ts-ignore
+    const [search, setSearch] = useState(filters?.search || "");
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
     const [viewData, setViewData] = useState<viewJobsDetails | null>(null);
     const [isOpen, setIsOpen] = useState(false);
 
     const jobDesks = usePage().props.jobDesks as jobDesks[] | undefined;
+
+    // @ts-ignore
     const jobDesksData = jobDesks?.data as jobDesks[];
 
     const debouncedSearch = useDebounce(search, 500);
@@ -32,35 +38,38 @@ export default function JobDeskTable() {
         setSearch(e.target.value);
     };
 
+    useEffect(() => {
+        if (debouncedSearch) {
+            router.get(route(route().current() || ""), { search: search }, {
+                preserveState: true,
+                replace: true,
+            });
+        }
+    }, [debouncedSearch, search]);
+
     return (
         <div className="overflow-x-auto mt-4">
-            <WhenVisible
-                data={jobDesksData as any}
-                fallback={
-                    <div className="flex flex-col space-y-3 bg-gray-600 p-4 rounded-md h-screen">
-                        <Skeleton className="w-full h-full rounded-xl animate-pulse" />
-                        <div className="space-y-2">
-                            <Skeleton className="h-full animate-pulse" />
-                            <Skeleton className="h-full animate-pulse" />
-                        </div>
-                    </div>
-                }
-            >
-                <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
-                    <div className="text-search mb-4">
-                        <TextInput
-                            placeholder="Search"
-                            className="w-1/2"
-                            name="search"
-                            type="text"
-                            autoComplete="off"
-                            value={search}
-                            onChange={(e) => {
-                                handleSearch(e);
-                            }}
-                        />
-                    </div>
 
+            <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
+                <div className="text-search mb-4">
+                    <TextInput
+                        placeholder="Search"
+                        className="w-1/2"
+                        name="search"
+                        type="text"
+                        autoComplete="off"
+                        value={search}
+                        onChange={(e) => {
+                            handleSearch(e);
+                        }}
+                    />
+                </div>
+                <WhenVisible
+                    data={jobDesksData as any}
+                    fallback={
+                        <JobTableSkeleton />
+                    }
+                >
                     <Table className="h-[500px] overflow-y-auto">
                         <TableHeader className="bg-neutral-100 p-4 w-full">
                             <TableRow>
@@ -137,13 +146,13 @@ export default function JobDeskTable() {
                                                     open={openPopoverId === jobDesk.id}
                                                     onOpenChange={(open) => {
                                                         setOpenPopoverId(open ? jobDesk.id : null)
+                                                        // @ts-ignore
                                                         setViewData(jobDesk);
                                                     }}
                                                 >
                                                     <PopoverTrigger>
                                                         <Icon
                                                             iconName="action"
-                                                            variant="secondary"
                                                             className="w-full"
                                                         />
                                                     </PopoverTrigger>
@@ -154,6 +163,7 @@ export default function JobDeskTable() {
                                                                 onClick={(e) => {
                                                                     e.stopPropagation();
                                                                     setIsOpen(true);
+                                                                    // @ts-ignore
                                                                     setViewData(jobDesk);
                                                                 }}
                                                             >
@@ -173,9 +183,9 @@ export default function JobDeskTable() {
                                                                 </Link>
                                                             </Button>
 
-                                                           <JobConfirmBox
-                                                             id={jobDesk.id}
-                                                           />
+                                                            <JobConfirmBox
+                                                                id={jobDesk.id}
+                                                            />
                                                         </div>
                                                     </PopoverContent>
                                                 </Popover>
@@ -186,48 +196,22 @@ export default function JobDeskTable() {
                             }
                         </TableBody>
                     </Table>
-
-                    <div className="viewDetailsDialog">
-                        <JobViewDialog
-                            isOpen={isOpen}
-                            setOpen={() => {
-                                setIsOpen(false);
-                            }}
-                            viewData={viewData}
-                        />
-                    </div>
-
-                    <div className="pagination my-2">
-                        <Pagination>
-                            <PaginationContent>
-                                {jobDesks.prev_page_url && (
-                                    <PaginationItem>
-                                        <PaginationPrevious href={jobDesks.prev_page_url} />
-                                    </PaginationItem>
-                                )}
-                                {jobDesks.links
-                                    .filter(link => link.label !== '&laquo; Previous' && link.label !== 'Next &raquo;')
-                                    .map((link, index) => (
-                                        <PaginationItem key={index}>
-                                            <PaginationLink
-                                                href={link.url || '#'}
-                                                isActive={link.active}
-                                                className={link.active ? 'bg-gray-300 font-bold' : ''}
-                                            >
-                                                {link.label}
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                    ))}
-                                {jobDesks.next_page_url && (
-                                    <PaginationItem>
-                                        <PaginationNext href={jobDesks.next_page_url} />
-                                    </PaginationItem>
-                                )}
-                            </PaginationContent>
-                        </Pagination>
-                    </div>
+                </WhenVisible>
+                <div className="viewDetailsDialog">
+                    <JobViewDialog
+                        isOpen={isOpen}
+                        setOpen={() => {
+                            setIsOpen(false);
+                        }}
+                        viewData={viewData || null }
+                    />
                 </div>
-            </WhenVisible>
+
+                <div className="pagination my-2">
+                  <JobDeskPagination />
+                </div>
+            </div>
+
         </div>
     )
 }

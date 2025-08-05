@@ -9,6 +9,7 @@ import useDebounce from "@/hooks/useDebounce";
 import DepartmentTopNavigation from "./DepartmentTopNavigation";
 import { toast } from "sonner";
 import { Badge } from "@/Components/ui/badge";
+import DepartmentSkeleton from "./DepartmentSkeleton";
 
 interface Department {
     id: number;
@@ -91,33 +92,25 @@ export default function DepartmentTable() {
                 isOpen={isOpen}
                 setOpen={setOpen}
             />
-            <WhenVisible
-                data={filteredDepartments as any}
-                fallback={
-                    <div className="flex flex-col space-y-3 bg-white p-4 rounded-md h-screen">
-                        <Skeleton className="h-full w-full rounded-xl animate-pulse" />
-                        <div className="space-y-2">
-                            <Skeleton className="h-full w-full animate-pulse" />
-                            <Skeleton className="h-full w-full animate-pulse" />
-                        </div>
-                    </div>
-                }
-            >
-                <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
-                    <div className="text-search">
-                        <TextInput
-                            placeholder="Search"
-                            className="w-1/2"
-                            name="search"
-                            type="text"
-                            autoComplete="off"
-                            value={search}
-                            onChange={(e) => {
-                                handleSearch(e);
-                            }}
-                        />
-                    </div>
 
+            <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
+                <div className="text-search">
+                    <TextInput
+                        placeholder="Search"
+                        className="w-1/2"
+                        name="search"
+                        type="text"
+                        autoComplete="off"
+                        value={search}
+                        onChange={(e) => {
+                            handleSearch(e);
+                        }}
+                    />
+                </div>
+                <WhenVisible
+                    data={filteredDepartments as any}
+                    fallback={<DepartmentSkeleton />}
+                >
                     <Table className="mt-4">
                         <TableHeader className="bg-neutral-100">
                             <TableRow>
@@ -198,8 +191,8 @@ export default function DepartmentTable() {
                             ))}
                         </TableBody>
                     </Table>
-                </div>
-            </WhenVisible>
+                </WhenVisible>
+            </div>
             <DepartmentDialog
                 isOpen={isOpen}
                 setOpen={setOpen}
@@ -207,6 +200,6 @@ export default function DepartmentTable() {
                 departmentId={isEditingMode ? departmentId : (null as any)}
                 editData={isEditingMode ? editData : (null as any)}
             />
-        </React.Fragment>
+        </React.Fragment >
     );
 }

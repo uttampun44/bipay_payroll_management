@@ -3,10 +3,9 @@ import { viewJobsDetails } from "../types/viewjobsdetails";
 import { striptag } from "@/utils/striptag";
 
 type JobViewDialogProps = {
-    id: number;
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    viewData: viewJobsDetails;
+    viewData: viewJobsDetails | null;
 };
 
 export default function JobViewDialog({ isOpen, setOpen, viewData }: JobViewDialogProps) {
@@ -30,7 +29,7 @@ export default function JobViewDialog({ isOpen, setOpen, viewData }: JobViewDial
                         </div>
                         <div className="flex flex-col gap-2">
                             <strong className="text-base text-black">Job Description</strong>
-                            <div className="text-sm">{striptag(viewData?.job_description)}</div>
+                            <div className="text-sm">{striptag(viewData?.job_description as string)}</div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <strong className="text-base text-black">Minimum Salary</strong>
@@ -48,18 +47,17 @@ export default function JobViewDialog({ isOpen, setOpen, viewData }: JobViewDial
                         </div>
                         <div className="flex flex-col gap-2">
                             <strong className="text-base text-black">Job Requirements</strong>
-                            <div className="text-sm">{striptag(viewData?.job_requirements)}</div>
+                            <div className="text-sm">{striptag(viewData?.job_requirements as string)}</div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <strong className="text-base text-black">Job Responsibilities</strong>
-                            <div className="text-sm">{striptag(viewData?.job_responsibilities)}</div>
+                            <div className="text-sm">{striptag(viewData?.job_responsibilities as string)}</div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <strong className="text-base text-black">Department</strong>
                             <div className="text-sm">{viewData?.department.department_name}</div>
                         </div>
-                    </div>
-              
+                    </div>  
             </DialogContent>
         </Dialog>
     )

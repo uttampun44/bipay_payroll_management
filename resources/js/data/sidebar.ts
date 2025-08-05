@@ -39,8 +39,8 @@ export const sidebarLinks: sidebarLinksType[] = [
                 icon: "jobDesk",
             },
             {
-                name: "Salary",
-                href: "/salaries",
+                name: "Shift",
+                href: "/administration/shifts",
             },
         ],
     },

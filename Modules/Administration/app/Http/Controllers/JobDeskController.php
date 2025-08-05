@@ -4,7 +4,6 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Modules\Administration\app\Repository\JobDeskRepository;
 use Modules\Administration\Http\Requests\JobDeskRequest;
 
@@ -19,9 +18,9 @@ class JobDeskController extends Controller
          $this->jobsDeskRepository = $jobsDeskRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->jobsDeskRepository->index();
+        return $this->jobsDeskRepository->index($request);
     }
 
     /**

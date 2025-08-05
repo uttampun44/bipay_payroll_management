@@ -13,6 +13,6 @@ class JobDeskSeeder extends Seeder
     public function run(): void
     {
         // $this->call([]);
-       JobDesk::factory()->count(100)->create();
+       JobDesk::factory()->count(1000)->create();
     }
 }
