@@ -8,7 +8,7 @@ export default function Authenticated({
 }: PropsWithChildren<{ header?: ReactNode }>) {
 
   return (
-    <div className="bg-neutral-100">
+    <div className="min-h-screen h-full bg-neutral-100">
       <TopNavigation />
       <div className="flex h-[calc(100%-90px)]">
         <Sidebar />

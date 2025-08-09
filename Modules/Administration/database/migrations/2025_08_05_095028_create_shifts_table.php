@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('start_time');
             $table->string('end_time');
             $table->integer('break_duration')->default(0);
-            $table->decimal('working_hours', 4, 2);
-            $table->decimal('overtime_rate', 4, 2)->nullable();
-            $table->decimal('night_shift_allowance', 4, 2)->nullable()->comment('Fixed amount for night shift allowance');
+            $table->integer('working_hours')->default(0);
+            $table->decimal('overtime_rate', 8, 2)->nullable();
+            $table->decimal('night_shift_allowance', 8, 2)->nullable()->comment('Fixed amount for night shift allowance');
             $table->decimal('weekend_rate', 4, 2)->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();

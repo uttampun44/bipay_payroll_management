@@ -4,7 +4,9 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Administration\app\Repository\ShiftRepository;
+use Modules\Administration\Http\Requests\ShiftRequest;
 
 class ShiftController extends Controller
 {
@@ -32,7 +34,15 @@ class ShiftController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(ShiftRequest $request) 
+    {
+        try {
+            return $this->shiftRepository->store($request->validated());
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to create shift", 500, $th);
+        }
+    }
 
     /**
      * Show the specified resource.
