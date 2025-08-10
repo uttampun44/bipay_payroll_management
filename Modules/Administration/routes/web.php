@@ -11,6 +11,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('administrations')->group(function () {
         Route::resource('departments', DepartmentController::class)->only(['index', 'store', 'update', 'edit', 'update', 'destroy']);
         Route::resource('job-desks', JobDeskController::class)->only(['index', 'create', 'store', 'update', 'edit', 'update', 'destroy']);
-        Route::resource('shifts', ShiftController::class)->only(['index', 'create', 'store', 'update', 'edit', 'update', 'destroy']);
+        Route::resource('shifts', ShiftController::class)->only(['index',  'store', 'update', 'edit', 'update', 'destroy']);
     });
 });

@@ -33,7 +33,6 @@ export default function JobDeskForm() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            console.log(data);
             post(route("job-desks.store"), {
                 onSuccess: () => {
                     toast.success("Job Desk Created Successfully");

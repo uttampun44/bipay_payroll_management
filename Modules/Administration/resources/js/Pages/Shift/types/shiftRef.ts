@@ -21,3 +21,8 @@ export type shiftTypes = {
     weekend_rate: string | number;
     status: boolean;
 }
+
+export interface shiftGetTypes extends Omit<shiftTypes, "status"> {
+    id: number;
+    status: number
+}

@@ -1,17 +1,23 @@
+import { Dispatch,SetStateAction } from "react";
+import {shiftTypes } from "../types/shiftRef";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
-import { forwardRef, useImperativeHandle } from "react";
-import { ShiftDialogProps, shiftTypes } from "../types/shiftRef";
-import { useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import { Button } from "@/Components/ui/button";
 import DangerButton from "@/Components/DangerButton";
-import { toast } from "sonner";
+import { useForm } from "@inertiajs/react";
 import { Switch } from "@/Components/ui/switch";
+import { toast } from "sonner";
 
-const ShiftDialog = forwardRef<any, ShiftDialogProps>(function ShiftDialog(props, ref) {
+type editProps = {
+    id: number,
+    isOpen: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+}
 
+export default function ShiftEditDialog({ id, isOpen, setOpen }: editProps) {
+     
     const { post: post, data, setData, errors, processing, resetAndClearErrors, } = useForm<shiftTypes>({
         shift_name: "",
         shift_code: "",
@@ -24,11 +30,10 @@ const ShiftDialog = forwardRef<any, ShiftDialogProps>(function ShiftDialog(props
         weekend_rate: "",
         status: false,
     })
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            post(route('shifts.store'), {
+            post(route('shifts.update', { id: id }), {
                 onSuccess: () => {
                     toast.success('Shift Added Successfully');
                     console.log('shift added successfully', data);
@@ -45,25 +50,11 @@ const ShiftDialog = forwardRef<any, ShiftDialogProps>(function ShiftDialog(props
             throw new Error(error);
         }
     }
-
-    const { isOpen, setOpen } = props;
-
-    useImperativeHandle(ref, () => {
-        return {
-            open: () => {
-                setOpen(true);
-            },
-            close: () => {
-                setOpen(false);
-            }
-        }
-    }, [setOpen, isOpen]);
-
     return (
-        <Dialog open={isOpen} onOpenChange={setOpen}>
+          <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogContent className="bg-white max-w-2xl w-full" >
                 <DialogHeader>
-                    <DialogTitle>Add Shift</DialogTitle>
+                    <DialogTitle>Edit Shift</DialogTitle>
                 </DialogHeader>
                 <DialogDescription> This is the add shift dialog </DialogDescription>
                 <form onSubmit={handleSubmit}>
@@ -298,5 +289,4 @@ const ShiftDialog = forwardRef<any, ShiftDialogProps>(function ShiftDialog(props
             </DialogContent>
         </Dialog>
     )
-})
-export default ShiftDialog;
+}
