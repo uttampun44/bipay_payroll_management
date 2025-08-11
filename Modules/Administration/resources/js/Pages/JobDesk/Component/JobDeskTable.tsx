@@ -5,14 +5,13 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 import useDebounce from "@/hooks/useDebounce";
 import { Link, router, usePage, WhenVisible } from "@inertiajs/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { jobDesks } from "../types/jobdesk";
 import { striptag } from "@/utils/striptag";
 import { Button } from "@/Components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
 import { viewJobsDetails } from "../types/viewjobsdetails";
 import JobViewDialog from "./JobViewDialog";
-import DangerButton from "@/Components/DangerButton";
 import JobConfirmBox from "./JobConfirmBox";
 import JobTableSkeleton from "./JobTableSkeleton";
 import JobDeskPagination from "./JobDeskPagination";
