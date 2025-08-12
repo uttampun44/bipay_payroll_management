@@ -1,4 +1,4 @@
-import { Button} from "@headlessui/react";
+import { Button } from "@headlessui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import React, { FormEventHandler } from "react";
 import Header from "@/Components/Header";
@@ -6,19 +6,22 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import { toast } from "sonner";
+import useToggle from "@/hooks/useToggle";
+import Icon from "@/Components/Icon";
 
 export default function Login({
     status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
+    canResetPassword }: {
+        status?: string;
+        canResetPassword: boolean;
+    }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
         remember: false as boolean,
     });
+
+    const { isToggle, setToggle } = useToggle(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -35,8 +38,7 @@ export default function Login({
         <React.Fragment>
             <Head title="Log in" />
             <Header />
-
-            <section className="bg-[#F0F4FC] min-h-screen  flex items-center justify-center">
+            <section className="bg-[#F0F4FC] pt-48 pb-[178px] flex items-center justify-center">
                 <div className="container max-w-[1440px] mx-auto px-4 flex flex-col lg:flex-row items-center gap-y-10 lg:gap-x-20">
                     <div className="w-full lg:w-[70%] flex flex-col items-center text-center gap-6">
                         <h1 className="text-3xl md:text-4xl font-bold">
@@ -63,7 +65,7 @@ export default function Login({
                             <div className="space-y-4">
                                 <div className="mt-4">
                                     <InputLabel
-                                        htmlFor="password"
+                                        htmlFor="email"
                                         value="Email"
                                     />
                                     <TextInput
@@ -72,22 +74,20 @@ export default function Login({
                                         name="email"
                                         value={data.email}
                                         className="mt-1 block w-full"
-                                        autoComplete="new-password"
                                         onChange={(e) =>
                                             setData("email", e.target.value)
                                         }
                                         required
                                     />
                                 </div>
-                                <div className="mt-4">
+                                <div className="mt-4 relative">
                                     <InputLabel
                                         htmlFor="password"
                                         value="Password"
                                     />
-
                                     <TextInput
                                         id="password"
-                                        type="password"
+                                        type={isToggle ? "text" : "password"}
                                         name="password"
                                         value={data.password}
                                         className="mt-1 block w-full"
@@ -97,7 +97,24 @@ export default function Login({
                                         }
                                         required
                                     />
+                                    <div className="toggle absolute right-1 top-1/2 ">
 
+                                    {
+                                        isToggle ? (
+                                            <Icon
+                                                iconName="passwordHidden"
+                                                className=" text-gray-400 cursor-pointer"
+                                                onClick={() => setToggle(!isToggle)}
+                                            />
+                                        ) : (
+                                             <Icon
+                                                iconName="passwordVisibility"
+                                                className=" text-gray-400 cursor-pointer"
+                                                onClick={() => setToggle(!isToggle)}
+                                            />
+                                        )
+                                    }
+                                    </div>
                                     <InputError
                                         message={errors.password}
                                         className="mt-2"
@@ -112,6 +129,7 @@ export default function Login({
                             <Button
                                 type="submit"
                                 className="mt-6 w-full bg-blue-500 p-1.5 text-white rounded-md"
+                                disabled={processing}
                             >
                                 Sign In
                             </Button>

@@ -1,3 +1,6 @@
 {
-    "Employee": true
+    "Employee": true,
+    "Administration": true,
+    "CreateDepartmentsTable": true,
+    "CreateShiftsTable": true
 }

@@ -3,10 +3,24 @@ import Icon from "./Icon";
 import { sidebarLinks } from "@/data/sidebar";
 import useToggle from "@/hooks/useToggle";
 import { Button } from "@headlessui/react";
+import { useState } from "react";
 
 export default function Sidebar() {
-    const { isToggle} = useToggle(false);
-    const { isToggle: isSubMenuOpen, toggle: toggleSubMenu } = useToggle(false);
+   
+    const [isCollapsed, setIsCollapsed] = useState(false); // sidebar collapse
+    const [openSubmenus, setOpenSubmenus] = useState<number[]>([]); // stores IDs of open submenu
+
+    const toggleSidebar = () => {
+        setIsCollapsed((prev) => !prev);
+    };
+
+    const toggleSubMenu = (id: number) => {
+        setOpenSubmenus((prevOpen) =>
+            prevOpen.includes(id)
+                ? prevOpen.filter((openId) => openId !== id)
+                : [...prevOpen, id]
+        );
+    };
 
     return (
         <aside
@@ -14,7 +28,7 @@ export default function Sidebar() {
                 bg-neutral-100 fixed top-[90px] left-0 
                h-full border-r-2 border-neutral-200
                 transition-all duration-300 ease-in-out p-4
-                ${isToggle ? "w-20" : "w-60"}
+                ${isCollapsed ? "w-20" : "w-60"}
             `}
         >
         
@@ -25,7 +39,7 @@ export default function Sidebar() {
                             {link.subNavigation ? (
                                 <div>
                                     <Button
-                                        onClick={toggleSubMenu}
+                                        onClick={() => toggleSubMenu(link.id)}
                                         className="w-full flex items-center justify-between p-2 hover:bg-neutral-200 rounded-lg"
                                     >
                                         <div className="flex items-center">
@@ -33,16 +47,16 @@ export default function Sidebar() {
                                                 iconName={link.icon}
                                                 className="w-5 h-5"
                                             />
-                                            {!isToggle && (
-                                                <span className="ml-2">
+                                            {!isCollapsed && (
+                                                <span className="ml-2 text-base font-semibold">
                                                     {link.name}
                                                 </span>
                                             )}
                                         </div>
-                                        {!isToggle && (
+                                        {!isCollapsed && (
                                             <Icon
                                                 iconName={
-                                                    isSubMenuOpen
+                                                    isCollapsed
                                                         ? "arrowUp"
                                                         : "arrowDown"
                                                 }
@@ -50,18 +64,18 @@ export default function Sidebar() {
                                             />
                                         )}
                                     </Button>
-                                    {isSubMenuOpen && !isToggle && (
+                                    {openSubmenus.includes(link.id) && !isCollapsed && (
                                         <ul className="pl-7 mt-2 space-y-2">
                                             {link.subNavigation.map((subLink) => (
                                                 <li key={subLink.name}>
                                                     <Link
                                                         href={subLink.href}
-                                                        className="flex items-center p-2 hover:bg-neutral-200 rounded-lg"
+                                                        className="flex items-start gap-x-3 p-1.5 text-sm font-normal hover:bg-neutral-200 rounded-lg"
                                                     >
                                                         {subLink.icon && (
                                                             <Icon
                                                                 iconName={subLink.icon}
-                                                                className="w-4 h-4"
+                                                                className="w-2 h-2"
                                                             />
                                                         )}
                                                         <span className="ml-2">
@@ -76,13 +90,13 @@ export default function Sidebar() {
                             ) : (
                                 <Link
                                     href={link.href || "#"}
-                                    className="flex items-center p-2 hover:bg-neutral-200 rounded-lg"
+                                    className="flex items-center p-2 text-base font-semibold hover:bg-neutral-200 rounded-lg"
                                 >
                                     <Icon
                                         iconName={link.icon}
                                         className="w-5 h-5"
                                     />
-                                    {!isToggle && (
+                                    {!isCollapsed && (
                                         <span className="ml-2">
                                             {link.name}
                                         </span>
