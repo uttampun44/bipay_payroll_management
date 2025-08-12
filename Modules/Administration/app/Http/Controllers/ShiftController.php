@@ -1,0 +1,88 @@
+<?php
+
+namespace Modules\Administration\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Modules\Administration\app\Repository\ShiftRepository;
+use Modules\Administration\Http\Requests\ShiftRequest;
+
+class ShiftController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    protected $shiftRepository;
+    public function __construct(ShiftRepository $shiftRepository)
+    {
+        $this->shiftRepository = $shiftRepository;
+    }
+    public function index()
+    {
+       return $this->shiftRepository->index();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('administration::create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(ShiftRequest $request) 
+    {
+        try {
+            return $this->shiftRepository->store($request->validated());
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to create shift", 500, $th);
+        }
+    }
+
+    /**
+     * Show the specified resource.
+     */
+    public function show($id)
+    {
+        return view('administration::show');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        return view('administration::edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(ShiftRequest $request, $id) 
+    {
+        try {
+            return $this->shiftRepository->update($id, $request->validated());
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to update shift", 500, $th);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id) 
+    {
+        try {
+            return $this->shiftRepository->destroy($id);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to delete shift", 500, $th);
+        }
+    }
+}

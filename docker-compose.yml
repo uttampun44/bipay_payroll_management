@@ -5,7 +5,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.4/app
+        image: bipay-payroll-management/laravel-sail:8.4
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -23,6 +23,8 @@ services:
             - sail
         depends_on:
             - mysql
+
+    #mysql service to run the database
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:

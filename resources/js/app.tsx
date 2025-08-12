@@ -1,8 +1,8 @@
 import "../css/app.css";
 import "./bootstrap";
+import 'react-quill/dist/quill.snow.css';
 
 import { createInertiaApp } from "@inertiajs/react";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";

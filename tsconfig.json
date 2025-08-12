@@ -30,7 +30,8 @@
             "@images/*": ["./public/assets/images/*"],
             "@lib/*": ["./resources/js/lib/*"],
             "@hooks/*": ["./resources/js/hooks/*"],
-            "Modules/*": ["./Modules/*"]
+            "Modules/*": ["./Modules/*"],
+            "@utils/*": ["./resources/js/utils/*"]
         }
     },
      "include": [

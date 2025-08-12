@@ -1,6 +1,7 @@
 import { IconType } from "@/Components/Icon";
 
 type sidebarLinksType = {
+    id: number;
     moduleName?: string;
     name: string;
     href?: string;
@@ -13,28 +14,77 @@ type sidebarLinksType = {
 };
 
 export const sidebarLinks: sidebarLinksType[] = [
-    {
+    {   
+        id: 1,
         moduleName: "Dashboard",
         name: "Dashboard",
         href: "/dashboard",
-        icon: "Dashboard" as const,
+        icon: "dashboard" as const,
     },
     {
+        id: 2,
+        moduleName: "Administration",
+        name: "Administration",
+        href: "#",
+        icon: "administration",
+        subNavigation: [
+            {
+                name: "Department",
+                href: "/administrations/departments",
+                icon: "department",
+            },
+            {
+                name: "Job Desk",
+                href: "/administrations/job-desks",
+                icon: "jobDesk",
+            },
+            {
+                name: "Shift",
+                href: "/administrations/shifts",
+                icon: "shift",
+            },
+        ],
+    },
+    {    id: 3,
         moduleName: "Employee",
         href: "#",
         name: "Employee",
-        icon: "Employee",
+        icon: "employee",
         subNavigation: [
             {
                 name: "All Employee",
-                href: "/employees",
-                icon: "Employee",
+                href: "/employees/employees",
             },
             {
                 name: "Appointment",
-                href: "/appointments",
+                href: "/employees/appointments",
                 icon: "appointment",
+            },
+            {
+                name: "Attendance",
+                href: "/attendances",
+                icon: "attendance",
             }
         ],
     },
+    {
+        id: 4,
+        moduleName: "Settings",
+        name: "Settings",
+        href: "#",
+        icon: "settings",
+        subNavigation: [
+            {
+                name: "Role",
+                href: "/roles",
+                icon: "department",
+            },
+            {
+                name: "Permission",
+                href: "/permissions",
+                icon: "jobDesk",
+            },
+            
+        ],
+    }
 ];
