@@ -6,6 +6,7 @@ import { Badge } from "@/Components/ui/badge";
 import { useState } from "react";
 import ShiftConfirmBox from "./ShiftConfirmBox";
 import ShiftEditDialog from "./ShiftEdit";
+import ShiftSkeletonTable from "./ShiftSkeletonTable";
 
 export default function ShiftTable() {
 
@@ -22,7 +23,7 @@ export default function ShiftTable() {
            <WhenVisible
            data={shifts as []}
            fallback={
-               <div>Loading...</div>
+               <ShiftSkeletonTable />
            }
            >
              <Table className="h-[500px] overflow-y-auto">

@@ -2,28 +2,22 @@ import DangerButton from "@/Components/DangerButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/Components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import { Textarea } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
 import { employeType } from "../types/employe";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
-import { Textarea } from "@headlessui/react";
 
-type EmployeeDialogProps = {
-    open: boolean;
+type EmployeeEditProps = {
+    employeeId: number;
+    isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function EmployeeDialog({ open, setOpen }: EmployeeDialogProps) {
-
-    const { data, setData, post: post, resetAndClearErrors, processing } = useForm<employeType>({
+export default function EmployeeEdit({ employeeId, isOpen, setOpen }: EmployeeEditProps) {
+  
+        const { data, setData, post: post, resetAndClearErrors, processing } = useForm<employeType>({
         employee_code: "",
         first_name: "",
         last_name: "",
@@ -44,7 +38,7 @@ export default function EmployeeDialog({ open, setOpen }: EmployeeDialogProps) {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            post(route("employees.store"), {
+            post(route("employees.update", {id: employeeId}), {
                 onSuccess: () => {
                     toast.success("Employee Added Successfully");
                     setOpen(false);
@@ -59,7 +53,7 @@ export default function EmployeeDialog({ open, setOpen }: EmployeeDialogProps) {
         }
     }
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogContent className="bg-white max-w-2xl">
                 <DialogHeader>
                     <DialogTitle>Add Employee</DialogTitle>
@@ -317,10 +311,7 @@ export default function EmployeeDialog({ open, setOpen }: EmployeeDialogProps) {
                     <div className="button flex gap-x-4 mt-4">
                         <Button type="button">Save</Button>
                         <DangerButton type="submit"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setOpen(false);
-                            }}
+                            onClick={() => setOpen(false)}
                         >Cancel</DangerButton>
                     </div>
                 </form>
