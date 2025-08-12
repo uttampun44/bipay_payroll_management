@@ -7,30 +7,28 @@ import { toast } from "sonner";
 type jobDeskDeleteProps = {
     id: number;
     isOpen: boolean;
-    setOpen: Dispatch<SetStateAction<boolean>>;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
-export default function ShiftConfirmBox({ id, isOpen, setOpen }: jobDeskDeleteProps) {
+export default function ShiftConfirmBox({ id, isOpen, setIsOpen }: jobDeskDeleteProps) {
 
     const handleDelete = (id: number) => {
         if (!id) return;
         router.delete(route("shifts.destroy", { id: id }));
         toast.success("Job Desk Deleted Successfully");
+        setIsOpen(false);
     }
 
     return (
-         <AlertDialog>
-            <AlertDialogTrigger >
-                <DangerButton>Delete Job Desk</DangerButton>
-            </AlertDialogTrigger>
+         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogContent className="bg-white">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This will delete the job desk permanently.
+                        This will delete the job shift permanently.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogFooter className="flex items-end">
+                    <AlertDialogCancel onClick={() => setIsOpen(false)}>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                     onClick={() => handleDelete(id)}
                     >Delete</AlertDialogAction>

@@ -35,8 +35,7 @@ export default function JobDeskEditForm({ departmentsData }: departmentEditProps
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-          
+        try {   
             put(route("job-desks.update", { id: jobDesk.id }), {
                 onSuccess: () => {
                     toast.success("Job Desk Updated Successfully");

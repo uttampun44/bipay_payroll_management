@@ -10,6 +10,7 @@ export type ShiftDialogProps = {
 };
 
 export type shiftTypes = {
+    id?: number;
     shift_name: string;
     shift_code: string;
     start_time: string;

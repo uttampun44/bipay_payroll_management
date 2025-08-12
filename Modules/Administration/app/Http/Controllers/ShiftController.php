@@ -63,10 +63,26 @@ class ShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {}
+    public function update(ShiftRequest $request, $id) 
+    {
+        try {
+            return $this->shiftRepository->update($id, $request->validated());
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to update shift", 500, $th);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id) {}
+    public function destroy($id) 
+    {
+        try {
+            return $this->shiftRepository->destroy($id);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception("Failed to delete shift", 500, $th);
+        }
+    }
 }

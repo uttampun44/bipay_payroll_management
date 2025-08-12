@@ -10,7 +10,7 @@ class ShiftRepository
     public function index()
     {
         $shifts =  Shift::query()
-                      ->select('shift_name', 'shift_code', 'start_time', 'end_time', 
+                      ->select('id','shift_name', 'shift_code', 'start_time', 'end_time', 
                                          'break_duration', 'working_hours', 'overtime_rate', 'night_shift_allowance', 
                                   'weekend_rate', 'status')->get();
 

@@ -1,19 +1,21 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
-import { Link, usePage, WhenVisible } from "@inertiajs/react";
-import { shiftGetTypes } from "../types/shiftRef";
+import { usePage, WhenVisible } from "@inertiajs/react";
+import { shiftGetTypes, shiftTypes } from "../types/shiftRef";
 import { Button } from "@/Components/ui/button";
 import { Badge } from "@/Components/ui/badge";
-import Icon from "@/Components/Icon";
-import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
 import { useState } from "react";
 import ShiftConfirmBox from "./ShiftConfirmBox";
+import ShiftEditDialog from "./ShiftEdit";
 
 export default function ShiftTable() {
 
     const shifts = usePage().props.shifts as shiftGetTypes[] | undefined;
-    const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
+    
     const [isOpen, setIsOpen] = useState(false);
-   
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
+    const [editData, setEditData] = useState<shiftTypes | undefined>(undefined);
+  
     return (
         <div className="deparment-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
 
@@ -59,8 +61,11 @@ export default function ShiftTable() {
                         <TableHead className="text-center">
                             Status
                         </TableHead>
+                         <TableHead className="text-center">
+                            Edit
+                        </TableHead>
                         <TableHead className="text-center">
-                            Action
+                            Delete
                         </TableHead>
                     </TableRow>
                 </TableHeader>
@@ -112,41 +117,32 @@ export default function ShiftTable() {
                                         )
                                     }
                                 </TableCell>
-
+                                 <TableCell className="p-2 text-center">
+                                    <Button 
+                                    variant="secondary"
+                                     className="text-sm"
+                                     size="sm"
+                                    onClick={() =>{
+                                        setSelectedId(shift.id);
+                                        console.log(shift)
+                                        setEditData(shift  as any);
+                                        setIsConfirmOpen(true);
+                                    }}>
+                                       Edit
+                                    </Button>
+                                 </TableCell>
                                 <TableCell className="p-2 text-center">
-                                    <div className="flex justify-center">
-                                        <Popover
-                                            open={openPopoverId === shift.id}
-                                            onOpenChange={(open) => {
-                                                setOpenPopoverId(open ? shift.id : null)  
-                                            }}
-                                        >
-                                            <PopoverTrigger>
-                                                <Icon
-                                                    iconName="action"
-                                                    className="w-full"
-                                                />
-                                            </PopoverTrigger>
-                                            <PopoverContent className="w-40">
-                                                <div className="flex flex-col gap-4 text-center">
-                                                    <Button
-                                                        variant="secondary"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setIsOpen(true);
-                                                        }}
-                                                    >
-                                                      Edit Shift
-                                                    </Button>
-                                                    <ShiftConfirmBox
-                                                      id={shift.id}
-                                                      isOpen={isOpen}
-                                                      setOpen={setIsOpen}
-                                                      />
-                                                </div>
-                                            </PopoverContent>
-                                        </Popover>
-                                    </div>
+                                   <Button
+                                     onClick={() => {
+                                       setSelectedId(shift.id);
+                                       setIsOpen(true);
+                                     }}
+                                     variant="outline"
+                                     className="text-sm"
+                                     size="sm"
+                                   >
+                                     Delete
+                                   </Button>
                                 </TableCell>
                             </TableRow>
                         ))
@@ -154,6 +150,24 @@ export default function ShiftTable() {
                 </TableBody>
             </Table>
            </WhenVisible>
+           {
+             selectedId && isOpen && (
+               <ShiftConfirmBox
+                id={selectedId as number}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+               />
+             )
+           }
+           
+           {
+            <ShiftEditDialog
+             id={selectedId as number}
+             isOpen={isConfirmOpen}
+             setOpen={setIsConfirmOpen}
+             editData={editData as shiftTypes}
+             />
+           }
         </div>
     )
 }

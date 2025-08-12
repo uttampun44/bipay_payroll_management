@@ -1,4 +1,4 @@
-import { Dispatch,SetStateAction } from "react";
+import { Dispatch,SetStateAction, useEffect } from "react";
 import {shiftTypes } from "../types/shiftRef";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
 import InputLabel from "@/Components/InputLabel";
@@ -14,11 +14,12 @@ type editProps = {
     id: number,
     isOpen: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
+    editData: shiftTypes;
 }
 
-export default function ShiftEditDialog({ id, isOpen, setOpen }: editProps) {
+export default function ShiftEditDialog({ id, isOpen, setOpen, editData }: editProps) {
      
-    const { post: post, data, setData, errors, processing, resetAndClearErrors, } = useForm<shiftTypes>({
+    const { put: put, data, setData, errors, processing, resetAndClearErrors, } = useForm<shiftTypes>({
         shift_name: "",
         shift_code: "",
         start_time: "",
@@ -33,10 +34,10 @@ export default function ShiftEditDialog({ id, isOpen, setOpen }: editProps) {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            post(route('shifts.update', { id: id }), {
+            put(route('shifts.update', { id: id }), {
                 onSuccess: () => {
                     toast.success('Shift Added Successfully');
-                    console.log('shift added successfully', data);
+                    console.log('shift updated successfully', data);
                     setOpen(false);
                     resetAndClearErrors();
                 },
@@ -50,6 +51,12 @@ export default function ShiftEditDialog({ id, isOpen, setOpen }: editProps) {
             throw new Error(error);
         }
     }
+
+    useEffect(() =>{
+        if(editData){
+            setData(editData)
+        }
+    }, [editData, setData])
     return (
           <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogContent className="bg-white max-w-2xl w-full" >
