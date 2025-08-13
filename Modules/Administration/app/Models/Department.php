@@ -4,6 +4,8 @@ namespace Modules\Administration\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Employee\Models\Employee;
+
 // use Modules\Administration\Database\Factories\DepartmentFactory;
 
 class Department extends Model
@@ -24,5 +26,10 @@ class Department extends Model
     public function jobDesks()
     {
         return $this->hasMany(JobDesk::class, 'department_id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'department_id');
     }
 }

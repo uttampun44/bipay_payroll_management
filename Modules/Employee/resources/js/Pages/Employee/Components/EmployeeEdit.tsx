@@ -16,7 +16,6 @@ type EmployeeEditProps = {
 };
 
 export default function EmployeeEdit({ employeeId, isOpen, setOpen }: EmployeeEditProps) {
-  
         const { data, setData, post: post, resetAndClearErrors, processing } = useForm<employeType>({
         employee_code: "",
         first_name: "",
@@ -309,8 +308,9 @@ export default function EmployeeEdit({ employeeId, isOpen, setOpen }: EmployeeEd
                         </div>
                     </div>
                     <div className="button flex gap-x-4 mt-4">
-                        <Button type="button">Save</Button>
-                        <DangerButton type="submit"
+                        <Button type="submit"
+                        >Save</Button>
+                        <DangerButton type="button"
                             onClick={() => setOpen(false)}
                         >Cancel</DangerButton>
                     </div>

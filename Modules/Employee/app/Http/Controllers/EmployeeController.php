@@ -5,7 +5,9 @@ namespace Modules\Employee\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Modules\Employee\app\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Modules\Employee\Http\Requests\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -27,13 +29,21 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employee::create');
+        return $this->employeeRepository->create();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(EmployeeRequest $request) 
+    {
+       try {
+         return $this->employeeRepository->store($request->all());
+       } catch (\Throwable $th) {
+         Log::error($th->getMessage());
+           throw new \Exception("Failed to create employee", 500, $th);
+       }
+    }
 
     /**
      * Show the specified resource.
