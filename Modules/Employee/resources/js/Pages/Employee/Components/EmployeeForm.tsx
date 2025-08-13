@@ -11,11 +11,18 @@ import { departmentType } from "../types/department";
 import { jobDeskType } from "../types/jobdesk";
 import { Switch } from "@/Components/ui/switch";
 import InputError from "@/Components/InputError";
+import useToggle from "@/hooks/useToggle";
+import Icon from "@/Components/Icon";
+import React, { useState } from "react";
 
 export default function EmployeeForm() {
 
     const jobDesks = usePage().props.jobDesks as jobDeskType[];
     const departments = usePage().props.departments as departmentType[];
+
+    const [isToggle, setToggle] = useToggle();
+    const [confirmPassword, setConfirmPassword] = useToggle();
+    const [imagePreview, setImagePreview] = useState<string>("");
 
     const { data, setData, post: post, resetAndClearErrors, processing, errors } = useForm<employeType>({
         employee_code: "",
@@ -31,13 +38,16 @@ export default function EmployeeForm() {
         department_id: 0,
         job_desk_id: 0,
         employment_status: false,
-        basic_salary: 0,
+        basic_salary: "",
         image: "",
     })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(data);
         try {
+            if (data.password !== data.confirm_password) return toast.error("Password and Confirm Password should be same");
+
             post(route("employees.store"), {
                 onSuccess: () => {
                     toast.success("Employee Added Successfully");
@@ -53,7 +63,7 @@ export default function EmployeeForm() {
     }
     return (
 
-        <form onClick={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
                 <div className="employee_code">
                     <InputLabel
@@ -62,7 +72,7 @@ export default function EmployeeForm() {
                     />
                     <TextInput
                         type="text"
-                        name="name"
+                        name="employee_code"
                         value={data.employee_code}
                         className="mt-1 block w-full"
                         onChange={(e) =>
@@ -70,6 +80,7 @@ export default function EmployeeForm() {
                         }
                         required
                     />
+                    <InputError message={errors.employee_code} className="mt-2" />
                 </div>
 
                 <div className="first_name">
@@ -87,6 +98,7 @@ export default function EmployeeForm() {
                         }
                         required
                     />
+                    <InputError message={errors.first_name} className="mt-2" />
                 </div>
                 <div className="last_name">
                     <InputLabel
@@ -103,6 +115,7 @@ export default function EmployeeForm() {
                         }
                         required
                     />
+                    <InputError message={errors.last_name} className="mt-2" />
                 </div>
 
                 <div className="email">
@@ -118,41 +131,46 @@ export default function EmployeeForm() {
                         onChange={(e) =>
                             setData("email", e.target.value)
                         }
-                        required
                     />
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
-                <div className="password">
-                    <InputLabel
-                        htmlFor="password"
-                        value="Password"
-                    />
+                <div className="password relative">
+                    <InputLabel htmlFor="password" value="Password" />
                     <TextInput
-                        type="text"
+                        type={isToggle ? "text" : "password"}
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
-                        onChange={(e) =>
-                            setData("password", e.target.value)
-                        }
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
+                    <InputError message={errors.password} className="mt-2" />
+                    <div className="absolute right-2 top-1/2">
+                        <Icon
+                            iconName={isToggle ? "passwordVisibility" : "passwordHidden"}
 
+                            onClick={() => setToggle(!isToggle)}
+                        />
+                    </div>
                 </div>
-                <div className="confirm_password">
-                    <InputLabel
-                        htmlFor="confirm_password"
-                        value="Confirm Password"
-                    />
+
+                <div className="confirm_password relative">
+                    <InputLabel htmlFor="confirm_password" value="Confirm Password" />
                     <TextInput
-                        type="text"
+                        type={confirmPassword ? "text" : "password"}
                         name="confirm_password"
                         value={data.confirm_password}
                         className="mt-1 block w-full"
-                        onChange={(e) =>
-                            setData("confirm_password", e.target.value)
-                        }
+                        onChange={(e) => setData("confirm_password", e.target.value)}
                         required
                     />
+                    <InputError message={errors.confirm_password} className="mt-2" />
+                    <div className="absolute right-2 top-1/2">
+                        <Icon
+                            iconName={confirmPassword ? "passwordVisibility" : "passwordHidden"}
+                            onClick={() => setConfirmPassword(!confirmPassword)}
+                        />
+                    </div>
                 </div>
                 <div className="gender">
                     <InputLabel
@@ -175,6 +193,7 @@ export default function EmployeeForm() {
                                 key="Female" value="Female">Female</SelectItem>
                         </SelectContent>
                     </Select>
+                    <InputError message={errors.gender} className="mt-2" />
                 </div>
                 <div className="phone">
                     <InputLabel
@@ -191,6 +210,7 @@ export default function EmployeeForm() {
                         }
                         required
                     />
+                    <InputError message={errors.phone} className="mt-2" />
                 </div>
                 <div className="address">
                     <InputLabel
@@ -207,6 +227,7 @@ export default function EmployeeForm() {
                         rows={4}
                         required
                     />
+                    <InputError message={errors.address} className="mt-2" />
                 </div>
                 <div className="hire_Date">
                     <InputLabel
@@ -223,6 +244,7 @@ export default function EmployeeForm() {
                         }
                         required
                     />
+                    <InputError message={errors.hire_date} className="mt-2" />
                 </div>
                 <div className="basic_salary">
                     <InputLabel
@@ -235,11 +257,11 @@ export default function EmployeeForm() {
                         value={data.basic_salary}
                         className="mt-1 block w-full"
                         onChange={(e) => {
-                            const value = e.target.value;
-                            setData("basic_salary", value ? Number(value) : 0)
+                            setData("basic_salary", e.target.value)
                         }}
                         required
                     />
+                    <InputError message={errors.basic_salary} className="mt-2" />
                 </div>
                 <div className="image">
                     <InputLabel
@@ -251,11 +273,27 @@ export default function EmployeeForm() {
                         name="image"
                         value={data.image}
                         className="mt-1 block w-full"
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                setImagePreview(URL.createObjectURL(file));
+                            }
                             setData("image", e.target.value)
-                        }
+                        }}
                         required
                     />
+                    {
+                        imagePreview ? (
+                            <div className="mt-2 flex gap-4">
+                                <img src={imagePreview} alt="image" className="w-20 h-auto" />
+                                <Icon iconName="trash" className=" text-red-500 cursor-pointer" onClick={() => {
+                                    setData("image", "");
+                                    setImagePreview("");
+                                }} />
+                            </div>
+                        ) : null
+                    }
+                    <InputError message={errors.image} className="mt-2" />
                 </div>
                 <div className="department">
                     <InputLabel
@@ -279,6 +317,7 @@ export default function EmployeeForm() {
                             ))}
                         </SelectContent>
                     </Select>
+                    <InputError message={errors.department_id} className="mt-2" />
                 </div>
                 <div className="jobs-desks">
                     <InputLabel
@@ -303,6 +342,7 @@ export default function EmployeeForm() {
                             ))}
                         </SelectContent>
                     </Select>
+                    <InputError message={errors.job_desk_id} className="mt-2" />
                 </div>
                 <div className="status">
                     <InputLabel
@@ -322,12 +362,8 @@ export default function EmployeeForm() {
                 </div>
             </div>
             <div className="button flex gap-x-4 mt-4">
-                <Button type="button" disabled={processing}>Save</Button>
-                <DangerButton type="submit"
-                    onClick={(e) => {
-                        e.preventDefault();
-                    }}
-                >Cancel</DangerButton>
+                <Button type="submit" disabled={processing}>Save</Button>
+                <DangerButton type="button">Cancel</DangerButton>
             </div>
         </form>
     );

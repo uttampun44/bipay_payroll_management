@@ -12,6 +12,6 @@ export type employeType ={
     department_id: number;
     job_desk_id: number;
     employment_status: boolean;
-    basic_salary: number;
+    basic_salary: string;
     image: string;
 }
