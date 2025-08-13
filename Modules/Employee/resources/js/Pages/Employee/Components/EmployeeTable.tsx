@@ -112,7 +112,7 @@ export default function EmployeeTable() {
                                                         <DangerButton
                                                          onClick={(e) => {
                                                              e.stopPropagation();
-                                                             employeeConfirmBoxRef.current.handleOpen();
+                                                             employeeConfirmBoxRef.current.handleOpen(employee.id);
                                                          }}
                                                         >
                                                          Delete Employee

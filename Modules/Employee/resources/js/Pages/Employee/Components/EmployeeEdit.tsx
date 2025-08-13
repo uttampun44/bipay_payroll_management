@@ -25,28 +25,28 @@ export default function EmployeeEdit() {
         const departments = usePage().props.departments as departmentType;
         const jobDesks = usePage().props.jobDesks as jobDeskType;
 
-        const { data, setData, post: post, resetAndClearErrors, processing, errors } = useForm<employeType>({
-        employee_code: "",
-        first_name: "",
-        last_name: "",
-        email: "",
+        const { data, setData, put: put, resetAndClearErrors, processing, errors } = useForm<employeType>({
+        employee_code: editData.employee_code || "",
+        first_name: editData.first_name || "",
+        last_name: editData.last_name || "",
+        email: editData.email || "",
         password: "",
         password_confirmation: "",
-        gender: "",
-        phone: "",
-        address: "",
-        hire_date: "",
-        department_id: 0,
-        job_desk_id: 0,
-        employment_status: false,
-        basic_salary: "",
-        image: null,
+        gender: editData.gender || "",
+        phone: editData.phone || "",
+        address: editData.address || "",
+        hire_date: editData.hire_date || "",
+        department_id: editData.department_id || 0,
+        job_desk_id: editData.job_desk_id || 0,
+        employment_status: editData.employment_status || false,
+        basic_salary: editData.basic_salary || "",
+        image: editData.image || null,
     })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            post(route("employees.update", {id: editData.id}), {
+            put(route("employees.update", {id: editData.id}), {
                 onSuccess: () => {
                     toast.success("Employee Added Successfully");
                     resetAndClearErrors();
@@ -75,7 +75,6 @@ export default function EmployeeEdit() {
                         onChange={(e) =>
                             setData("employee_code", e.target.value)
                         }
-                        required
                     />
                     <InputError message={errors.employee_code} className="mt-2" />
                 </div>
@@ -93,7 +92,6 @@ export default function EmployeeEdit() {
                         onChange={(e) =>
                             setData("first_name", e.target.value)
                         }
-                        required
                     />
                     <InputError message={errors.first_name} className="mt-2" />
                 </div>
@@ -110,7 +108,6 @@ export default function EmployeeEdit() {
                         onChange={(e) =>
                             setData("last_name", e.target.value)
                         }
-                        required
                     />
                     <InputError message={errors.last_name} className="mt-2" />
                 </div>
@@ -140,7 +137,6 @@ export default function EmployeeEdit() {
                         defaultValue={editData.password}
                         className="mt-1 block w-full"
                         onChange={(e) => setData("password", e.target.value)}
-                        required
                     />
                     <InputError message={errors.password} className="mt-2" />
                     <div className="absolute right-2 top-1/2">
@@ -160,7 +156,6 @@ export default function EmployeeEdit() {
                         defaultValue={editData.password_confirmation}
                         className="mt-1 block w-full"
                         onChange={(e) => setData("password_confirmation", e.target.value)}
-                        required
                     />
                     <InputError message={errors.password_confirmation} className="mt-2" />
                     <div className="absolute right-2 top-1/2">
@@ -206,7 +201,6 @@ export default function EmployeeEdit() {
                         onChange={(e) =>
                             setData("phone", e.target.value)
                         }
-                        required
                     />
                     <InputError message={errors.phone} className="mt-2" />
                 </div>
@@ -223,7 +217,6 @@ export default function EmployeeEdit() {
                             setData("address", e.target.value)
                         }
                         rows={4}
-                        required
                     />
                     <InputError message={errors.address} className="mt-2" />
                 </div>
@@ -240,7 +233,6 @@ export default function EmployeeEdit() {
                         onChange={(e) =>
                             setData("hire_date", e.target.value)
                         }
-                        required
                     />
                     <InputError message={errors.hire_date} className="mt-2" />
                 </div>
@@ -257,7 +249,6 @@ export default function EmployeeEdit() {
                         onChange={(e) => {
                             setData("basic_salary", e.target.value)
                         }}
-                        required
                     />
                     <InputError message={errors.basic_salary} className="mt-2" />
                 </div>
@@ -277,7 +268,6 @@ export default function EmployeeEdit() {
                             }
                             setData("image", file as any)
                         }}
-                        required
                     />
                     {
                         imagePreview ? (

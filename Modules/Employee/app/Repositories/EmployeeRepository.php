@@ -3,6 +3,7 @@
 namespace Modules\Employee\app\Repositories;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Modules\Administration\app\Models\Department;
 use Modules\Administration\app\Models\JobDesk;
@@ -91,9 +92,24 @@ class EmployeeRepository
             'jobDesks' => $jobDesks,
         ]);
     }
-    public function update(Employee $employee, array $data)
+    public function update(int $id, array $data)
     {
+        $employee = Employee::find($id);
+
+        if (!$employee->id) {
+            return throw new \Exception("Employee not found");
+        }
+
+        if($data['password']) {
+            $employee->password = Hash::make($data['password']);
+        }
+
         $employee->update($data);
-        return $employee;
+    }
+
+    public function destroy($id)
+    {
+        $employee = Employee::find($id);
+        $employee->delete();
     }
 }

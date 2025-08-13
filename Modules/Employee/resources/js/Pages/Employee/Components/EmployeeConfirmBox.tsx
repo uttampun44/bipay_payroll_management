@@ -1,21 +1,10 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/Components/ui/alert-dialog";
 import { router } from "@inertiajs/react";
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { toast } from "sonner";
+import { EmployeeConfirmBoxProps } from "../types/confirm";
 
-interface employeeConfirmRef {
-    open: () => void;
-    close: () => void;
-}
-
-type EmployeeConfirmBoxProps = {
-    id: number;
-    isOpen: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    ref?: React.Ref<employeeConfirmRef>
-};
-
-const EmployeeConfirmBox = forwardRef<any, EmployeeConfirmBoxProps>(function EmployeeConfirmBox(props, ref) {
+const EmployeeConfirmBox = forwardRef<any, EmployeeConfirmBoxProps>((props, ref) =>{
 
     const handleDelete = (id: number) => {
         if (!id) return;
@@ -23,18 +12,18 @@ const EmployeeConfirmBox = forwardRef<any, EmployeeConfirmBoxProps>(function Emp
         toast.success("Employee Deleted Successfully");
     }
 
-    const { id, isOpen, setOpen } = props;
+   const [isOpen, setOpen] = useState(false);
 
-    useImperativeHandle(ref, () => {
-        return {
-            handleOpen: () => {
-                setOpen(true);
-            },
-            handleClose: () => {
-                setOpen(false);
-            },
-        }
-    }, [setOpen, isOpen]);
+    useImperativeHandle(ref, () => ({
+             
+        handleOpen: () => {
+            setOpen(true);
+        },
+        handleClose: () => {
+            setOpen(false);
+        },
+    }), [setOpen, isOpen]);
+
     
     return (
         <AlertDialog open={isOpen} onOpenChange={setOpen}>
@@ -49,7 +38,7 @@ const EmployeeConfirmBox = forwardRef<any, EmployeeConfirmBoxProps>(function Emp
                 <AlertDialogFooter className="flex items-end">
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                        onClick={() => handleDelete(id)}
+                        onClick={() => handleDelete(props.id)}
                     >Delete</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

@@ -65,10 +65,26 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {}
+    public function update(Request $request, $id) 
+    {
+      try {
+          $this->employeeRepository->update($id, $request->all());
+          return redirect()->route('employees.index')->with('success', 'Employee updated successfully');
+      } catch (\Throwable $th) {
+           throw new \Exception("Failed to update employee", 500, $th);
+      }
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id) {}
+    public function destroy($id) 
+    {
+      try {
+          return $this->employeeRepository->destroy($id);
+      } catch (\Throwable $th) {
+         Log::error($th->getMessage());
+           throw new \Exception("Failed to delete employee", 500, $th);
+      }
+    }
 }
