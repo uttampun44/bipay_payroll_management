@@ -36,6 +36,7 @@ export default function EmployeeTable() {
                     <TableHeader className="bg-neutral-100">
                         <TableRow>
                             <TableHead>ID</TableHead>
+                            <TableHead>Image</TableHead>
                             <TableHead>Employee Code</TableHead>
                             <TableHead>First Name</TableHead>
                             <TableHead>Last Name</TableHead>
@@ -57,6 +58,9 @@ export default function EmployeeTable() {
                             employeesData.map((employee: employeeTypeResponse, index: number) => (
                                 <TableRow key={employee.id}>
                                     <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <img src={employee.image} alt="image" className="w-10 h-auto" />
+                                    </TableCell>
                                     <TableCell>{employee.employee_code}</TableCell>
                                     <TableCell>{employee.first_name}</TableCell>
                                     <TableCell>{employee.last_name}</TableCell>
