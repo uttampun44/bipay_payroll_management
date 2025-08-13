@@ -18,6 +18,7 @@ export default function EmployeeTable() {
     const employees = usePage().props.employees as employeeTypeResponse[] | undefined;
     // @ts-ignore
     const employeesData = Array.isArray(employees?.data) ? employees?.data : [];
+    console.log(employeesData);
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
     return (

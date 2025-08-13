@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Modules\Administration\app\Models\Department;
 use Modules\Administration\app\Models\JobDesk;
 use Modules\Employee\Models\Employee;
+use Illuminate\Support\Str;
 
 class EmployeeRepository
 {
@@ -72,8 +73,8 @@ class EmployeeRepository
     {
         if ($data['image']) {
             $img_ext = $data['image']->getClientOriginalExtension();
-            $filename = 'employee-' . time() . '.' . $img_ext;
-            $path = $data['image']->storeAs(public_path(), $filename);
+            $uuidFilename = Str::uuid() . '.' . $img_ext;
+            $path = $data['image']->storeAs('app/public/employee', $uuidFilename);
             $data['image'] = $path;
         }
 

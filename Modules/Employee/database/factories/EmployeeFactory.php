@@ -3,8 +3,10 @@
 namespace Modules\Employee\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 use Modules\Administration\app\Models\Department;
 use Modules\Administration\app\Models\JobDesk;
+use Illuminate\Support\Str;
 
 class EmployeeFactory extends Factory
 {
@@ -17,7 +19,18 @@ class EmployeeFactory extends Factory
      * Define the model's default state.
      */
     public function definition(): array
-    {
+    {   
+        $uuid = Str::uuid();
+        Storage::disk('public')->makeDirectory('employee');
+ 
+        $imageName = $this->faker->image(
+            storage_path('app/public/employee'),
+            500,
+            500,
+            null,
+            false
+        );
+    
         return [
             'employee_code' => $this->faker->unique()->randomNumber(6),
             'first_name' => $this->faker->firstName(),
@@ -32,8 +45,7 @@ class EmployeeFactory extends Factory
             'job_desk_id' => $this->faker->randomElement(JobDesk::pluck('id')->toArray()),
             'employment_status' => $this->faker->boolean(),
             'basic_salary' => $this->faker->randomFloat(2, 100, 1000),
-            'image' => $this->faker->imageUrl(),
+            'image' => 'employee/' . $uuid . '.png' . pathinfo($imageName, PATHINFO_EXTENSION),
         ];
     }
 }
-
