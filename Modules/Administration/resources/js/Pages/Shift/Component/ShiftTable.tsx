@@ -125,7 +125,6 @@ export default function ShiftTable() {
                                      size="sm"
                                     onClick={() =>{
                                         setSelectedId(shift.id);
-                                        console.log(shift)
                                         setEditData(shift  as any);
                                         setIsConfirmOpen(true);
                                     }}>

@@ -71,7 +71,6 @@ export default function EmployeeEdit() {
                         type="text"
                         name="employee_code"
                         defaultValue={editData.employee_code}
-                        // value={data.employee_code}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("employee_code", e.target.value)
@@ -89,7 +88,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="text"
                         name="first_name"
-                        value={data.first_name}
+                        defaultValue={editData.first_name}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("first_name", e.target.value)
@@ -106,7 +105,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="text"
                         name="last_name"
-                        value={data.last_name}
+                        defaultValue={editData.last_name}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("last_name", e.target.value)
@@ -124,7 +123,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="text"
                         name="email"
-                        value={data.email}
+                        defaultValue={editData.email}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("email", e.target.value)
@@ -138,7 +137,7 @@ export default function EmployeeEdit() {
                         type={isToggle ? "text" : "password"}
                         name="password"
                         autoComplete="new-password"
-                        value={data.password}
+                        defaultValue={editData.password}
                         className="mt-1 block w-full"
                         onChange={(e) => setData("password", e.target.value)}
                         required
@@ -147,7 +146,6 @@ export default function EmployeeEdit() {
                     <div className="absolute right-2 top-1/2">
                         <Icon
                             iconName={isToggle ? "passwordVisibility" : "passwordHidden"}
-
                             onClick={() => setToggle(!isToggle)}
                         />
                     </div>
@@ -159,7 +157,7 @@ export default function EmployeeEdit() {
                         type={confirmPassword ? "text" : "password"}
                         name="confirm_password"
                         autoComplete="new-password"
-                        value={data.password_confirmation}
+                        defaultValue={editData.password_confirmation}
                         className="mt-1 block w-full"
                         onChange={(e) => setData("password_confirmation", e.target.value)}
                         required
@@ -181,7 +179,7 @@ export default function EmployeeEdit() {
                         onValueChange={(value) => {
                             setData('gender', value);
                         }}
-                        value={String(data.gender)}
+                        defaultValue={editData.gender}
                     >
                         <SelectTrigger className="">
                             <SelectValue placeholder="Select Gender" />
@@ -203,7 +201,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="text"
                         name="phone"
-                        value={data.phone}
+                        defaultValue={editData.phone}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("phone", e.target.value)
@@ -219,7 +217,7 @@ export default function EmployeeEdit() {
                     />
                     <Textarea
                         name="address"
-                        value={data.address}
+                        defaultValue={editData.address}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("address", e.target.value)
@@ -237,7 +235,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="date"
                         name="hire_date"
-                        value={data.hire_date}
+                        defaultValue={editData.hire_date}
                         className="mt-1 block w-full"
                         onChange={(e) =>
                             setData("hire_date", e.target.value)
@@ -254,7 +252,7 @@ export default function EmployeeEdit() {
                     <TextInput
                         type="number"
                         name="basic_salary"
-                        value={data.basic_salary}
+                        defaultValue={editData.basic_salary}
                         className="mt-1 block w-full"
                         onChange={(e) => {
                             setData("basic_salary", e.target.value)
@@ -301,10 +299,10 @@ export default function EmployeeEdit() {
                     />
                     <Select name="department_id"
                         onValueChange={(value) => {
-                            const department = departments.find((department) => department.id === Number(value));
+                            const department = departments.find((department: departmentType) => department.id === Number(value));
                             setData('department_id', department ? department.id : 0);
                         }}
-                        value={String(data.department_id)}
+                        defaultValue={editData.department_id}
                     >
                         <SelectTrigger className="">
                             <SelectValue placeholder="Select Department" />
@@ -329,7 +327,7 @@ export default function EmployeeEdit() {
                             setData('job_desk_id', jobDesk ? jobDesk.id : 0);
 
                         }}
-                        value={String(data.job_desk_id)}
+                        defaultValue={editData.job_desk_id}
                     >
                         <SelectTrigger className="">
                             <SelectValue placeholder="Select Job Desk" />
@@ -350,7 +348,7 @@ export default function EmployeeEdit() {
                     />
                     <Switch
                         name="employment_status"
-                        checked={data.employment_status}
+                        defaultChecked={editData.employment_status}
                         onCheckedChange={(checked) => {
                             setData("employment_status", checked as boolean);
                         }}

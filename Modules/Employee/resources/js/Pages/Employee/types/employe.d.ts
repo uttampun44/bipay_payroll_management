@@ -27,7 +27,7 @@ interface employeeTypeResponse {
     phone: string;
     address: string;
     hire_date: string;
-    employment_status: boolean;
+    employment_status: number;
     basic_salary: string;
     department: {
         id: number;

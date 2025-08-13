@@ -1,23 +1,23 @@
 import TextInput from "@/Components/TextInput";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
-import { Link, router, usePage, WhenVisible } from "@inertiajs/react";
+import { Link, usePage, WhenVisible } from "@inertiajs/react";
 import { employeeTypeResponse } from "../types/employe";
 import EmployeeSkeleton from "./EmployeeSkeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Icon from "@/Components/Icon";
 import { Button } from "@/Components/ui/button";
 import EmployeeConfirmBox from "./EmployeeConfirmBox";
 import EmployeePagination from "./EmployeePagination";
+import { Badge } from "@/Components/ui/badge";
+import DangerButton from "@/Components/DangerButton";
 
 export default function EmployeeTable() {
-
+    
+    const employeeConfirmBoxRef = useRef<any>(null);
     const employees = usePage().props.employees as employeeTypeResponse[] | undefined;
     // @ts-ignore
     const employeesData = Array.isArray(employees?.data) ? employees?.data : [];
-    
-    console.log(employees);
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
     return (
@@ -68,8 +68,15 @@ export default function EmployeeTable() {
                                     <TableCell>{employee.hire_date}</TableCell>
                                     <TableCell>{employee.department.department_name}</TableCell>
                                     <TableCell>{employee.job_desk.job_title}</TableCell>
-                                    <TableCell>{employee.employment_status}</TableCell>
-                                    <TableCell>{employee.basic_salary}</TableCell>
+                                    <TableCell>{employee.employment_status === 1 ? (
+                                        <Badge variant="success">Active</Badge>
+                                    ) : (
+                                        <Badge variant="destructive">Inactive</Badge>
+                                    )}</TableCell>
+                                    <TableCell>{new Intl.NumberFormat("en-US", {
+                                        style: "currency",
+                                        currency: "USD",
+                                    }).format(Number(employee.basic_salary))}</TableCell>
                                     <TableCell>
                                         <div className="flex justify-center">
                                             <Popover
@@ -102,8 +109,17 @@ export default function EmployeeTable() {
                                                                 Edit Employee
                                                             </Link>
                                                         </Button>
+                                                        <DangerButton
+                                                         onClick={(e) => {
+                                                             e.stopPropagation();
+                                                             employeeConfirmBoxRef.current.handleOpen();
+                                                         }}
+                                                        >
+                                                         Delete Employee
+                                                        </DangerButton>
                                                         <EmployeeConfirmBox
-                                                            id={employee.id}
+                                                            id={employee.id as number}
+                                                            ref={employeeConfirmBoxRef}
                                                         />
                                                     </div>
                                                 </PopoverContent>
@@ -116,7 +132,7 @@ export default function EmployeeTable() {
                     </TableBody>
                 </Table>
             </WhenVisible>
-            
+
             <EmployeePagination />
         </div>
     );
