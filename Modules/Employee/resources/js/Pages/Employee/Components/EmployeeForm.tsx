@@ -30,7 +30,7 @@ export default function EmployeeForm() {
         last_name: "",
         email: "",
         password: "",
-        confirm_password: "",
+        password_confirmation: "",
         gender: "",
         phone: "",
         address: "",
@@ -39,22 +39,25 @@ export default function EmployeeForm() {
         job_desk_id: 0,
         employment_status: false,
         basic_salary: "",
-        image: "",
+        image: null,
     })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(data);
         try {
-            if (data.password !== data.confirm_password) return toast.error("Password and Confirm Password should be same");
+            if (data.password !== data.password_confirmation) {
+                return toast.error("Password and Confirm Password should be same")
+            };
 
             post(route("employees.store"), {
                 onSuccess: () => {
                     toast.success("Employee Added Successfully");
                     resetAndClearErrors();
                 },
-                onError: () => {
+                onError: (error) => {
                     toast.error("Employee Creation Failed");
+                    console.info(error);
                 }
             });
         } catch (error) {
@@ -62,8 +65,7 @@ export default function EmployeeForm() {
         }
     }
     return (
-
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} action="/upload-image" encType="multipart/form-data">
             <div className="grid grid-cols-2 gap-4">
                 <div className="employee_code">
                     <InputLabel
@@ -139,6 +141,7 @@ export default function EmployeeForm() {
                     <TextInput
                         type={isToggle ? "text" : "password"}
                         name="password"
+                        autoComplete="new-password"
                         value={data.password}
                         className="mt-1 block w-full"
                         onChange={(e) => setData("password", e.target.value)}
@@ -159,12 +162,13 @@ export default function EmployeeForm() {
                     <TextInput
                         type={confirmPassword ? "text" : "password"}
                         name="confirm_password"
-                        value={data.confirm_password}
+                        autoComplete="new-password"
+                        value={data.password_confirmation}
                         className="mt-1 block w-full"
-                        onChange={(e) => setData("confirm_password", e.target.value)}
+                        onChange={(e) => setData("password_confirmation", e.target.value)}
                         required
                     />
-                    <InputError message={errors.confirm_password} className="mt-2" />
+                    <InputError message={errors.password_confirmation} className="mt-2" />
                     <div className="absolute right-2 top-1/2">
                         <Icon
                             iconName={confirmPassword ? "passwordVisibility" : "passwordHidden"}
@@ -271,14 +275,13 @@ export default function EmployeeForm() {
                     <TextInput
                         type="file"
                         name="image"
-                        value={data.image}
                         className="mt-1 block w-full"
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
                                 setImagePreview(URL.createObjectURL(file));
                             }
-                            setData("image", e.target.value)
+                            setData("image", file as any)
                         }}
                         required
                     />
@@ -287,7 +290,7 @@ export default function EmployeeForm() {
                             <div className="mt-2 flex gap-4">
                                 <img src={imagePreview} alt="image" className="w-20 h-auto" />
                                 <Icon iconName="trash" className=" text-red-500 cursor-pointer" onClick={() => {
-                                    setData("image", "");
+                                    setData("image", null);
                                     setImagePreview("");
                                 }} />
                             </div>

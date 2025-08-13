@@ -10,45 +10,51 @@ export default function EmployeeSkeleton() {
                             ID
                         </TableHead>
                         <TableHead className="text-center">
-                            Shift Name
+                            Employee Code
                         </TableHead>
                         <TableHead className="text-center">
-                            Shift Code
+                            First Name
                         </TableHead>
                         <TableHead className="text-center">
-                            Start Time
+                            Last Name
                         </TableHead>
                         <TableHead className="text-center">
-                            Start End
+                            Email
                         </TableHead>
                         <TableHead className="text-center">
-                            Break Duration
+                            Phone
                         </TableHead>
                         <TableHead className="text-center">
-                            Working Hours
+                            Date of Birth
                         </TableHead>
                         <TableHead className="text-center">
-                            Overtime Rate
+                            Gender
                         </TableHead>
                         <TableHead className="text-center">
-                            Night Shift Allowance
+                            Address
                         </TableHead>
                         <TableHead className="text-center">
-                            Weekend Rate
+                            Hire Date
                         </TableHead>
                         <TableHead className="text-center">
-                            Status
+                            Department
+                        </TableHead>
+                        <TableHead className="text-center">
+                            Job Desk
+                        </TableHead>
+                        <TableHead className="text-center">
+                            Employment Status
+                        </TableHead>
+                        <TableHead className="text-center">
+                            Basic Salary
                         </TableHead>
                          <TableHead className="text-center">
-                            Edit
-                        </TableHead>
-                        <TableHead className="text-center">
-                            Delete
+                            Action
                         </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="h-[200px] overflow-y-auto p-4 text-center">
-                {[...Array(13)].map((_, index) => (
+                {[...Array(15)].map((_, index) => (
                     <TableRow key={index}>
                         <TableCell className="p-2">
                             <Skeleton className="h-4 w-8 mx-auto" />
@@ -78,6 +84,12 @@ export default function EmployeeSkeleton() {
                             <Skeleton className="h-4 w-36 mx-auto" />
                         </TableCell>
                         <TableCell className="p-2">
+                            <Skeleton className="h-8 w-8 mx-auto" />
+                        </TableCell>
+                         <TableCell className="p-2">
+                            <Skeleton className="h-8 w-8 mx-auto" />
+                        </TableCell>
+                         <TableCell className="p-2">
                             <Skeleton className="h-8 w-8 mx-auto" />
                         </TableCell>
                          <TableCell className="p-2">

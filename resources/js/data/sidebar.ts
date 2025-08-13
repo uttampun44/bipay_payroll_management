@@ -52,8 +52,9 @@ export const sidebarLinks: sidebarLinksType[] = [
         icon: "employee",
         subNavigation: [
             {
-                name: "All Employee",
+                name: "Employee",
                 href: "/employees/employees",
+                icon: "employee",
             },
             {
                 name: "Appointment",

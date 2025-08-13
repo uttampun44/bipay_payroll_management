@@ -19,9 +19,9 @@ class EmployeeController extends Controller
     {
         $this->employeeRepository = $employeeRepository;
     }
-    public function index()
+    public function index(Request $request)
     {
-       return $this->employeeRepository->index();
+       return $this->employeeRepository->index($request);
     }
 
     /**
@@ -38,6 +38,7 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request) 
     {
        try {
+        Log::info("EmployeeController::store", $request->all());
          return $this->employeeRepository->store($request->all());
        } catch (\Throwable $th) {
          Log::error($th->getMessage());
@@ -58,7 +59,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        return view('employee::edit');
+       return $this->employeeRepository->edit($id);
     }
 
     /**

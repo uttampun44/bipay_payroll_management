@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('gender');
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->date('hire_date')->nullable();
             $table->longText('image')->nullable();
             $table->foreignId('department_id')

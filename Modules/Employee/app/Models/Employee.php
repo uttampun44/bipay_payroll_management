@@ -16,7 +16,22 @@ class Employee extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'employee_code',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'gender',
+        'phone',
+        'address',
+        'hire_date',
+        'department_id',
+        'job_desk_id',
+        'employment_status',
+        'basic_salary',
+        'image',
+    ];
 
     // protected static function newFactory(): EmployeeFactory
     // {
