@@ -25,5 +25,5 @@ export type shiftTypes = {
 
 export interface shiftGetTypes extends Omit<shiftTypes, "status"> {
     id: number;
-    status: number
+    status: boolean
 }

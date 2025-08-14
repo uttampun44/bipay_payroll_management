@@ -1,30 +1,49 @@
 import TextInput from "@/Components/TextInput";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
-import { Link, usePage, WhenVisible } from "@inertiajs/react";
+import { Link, router, usePage, WhenVisible } from "@inertiajs/react";
 import { employeeTypeResponse } from "../types/employe";
 import EmployeeSkeleton from "./EmployeeSkeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "@/Components/Icon";
 import { Button } from "@/Components/ui/button";
 import EmployeeConfirmBox from "./EmployeeConfirmBox";
 import EmployeePagination from "./EmployeePagination";
 import { Badge } from "@/Components/ui/badge";
 import DangerButton from "@/Components/DangerButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import useDebounce from "@/hooks/useDebounce";
 
 export default function EmployeeTable() {
-    
+
     const employeeConfirmBoxRef = useRef<any>(null);
     const employees = usePage().props.employees as employeeTypeResponse[] | undefined;
     // @ts-ignore
     const employeesData = Array.isArray(employees?.data) ? employees?.data : [];
-    console.log(employeesData);
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    
+    console.log('EmployeeTable', employeesData);
+    const debouncedSearch = useDebounce(searchTerm, 500);
+     
+    useEffect(() => {
+        if (debouncedSearch) {
+            router.get(route(route().current() || ""), { search: searchTerm }, {
+                preserveState: true,
+                replace: true,
+            });
+        }
+    }, [debouncedSearch, searchTerm]);
 
     return (
         <div className="employe-table-container px-8 py-4 bg-white rounded-md" style={{ margin: "16px 32px" }}>
             <div className="text-search">
-                <TextInput placeholder="Search" className="w-1/2" />
+                <TextInput placeholder="Search employee" className="w-1/2"
+                 value={searchTerm}
+                 onChange={(e) => {
+                     setSearchTerm(e.target.value);
+                 }}
+                />
             </div>
             <div className="employee my-3">
                 <h6 className="text-black text-lg font-semibold ">Employee</h6>
@@ -60,7 +79,10 @@ export default function EmployeeTable() {
                                 <TableRow key={employee.id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>
-                                        <img src={employee.image} alt="image" className="w-10 h-auto" />
+                                        <Avatar>
+                                            <AvatarImage src={'/storage/' + employee.image} />
+                                            <AvatarFallback>CN</AvatarFallback>
+                                        </Avatar>
                                     </TableCell>
                                     <TableCell>{employee.employee_code}</TableCell>
                                     <TableCell>{employee.first_name}</TableCell>
@@ -73,7 +95,7 @@ export default function EmployeeTable() {
                                     <TableCell>{employee.hire_date}</TableCell>
                                     <TableCell>{employee.department.department_name}</TableCell>
                                     <TableCell>{employee.job_desk.job_title}</TableCell>
-                                    <TableCell>{employee.employment_status === 1 ? (
+                                    <TableCell>{employee.employment_status === true ? (
                                         <Badge variant="success">Active</Badge>
                                     ) : (
                                         <Badge variant="destructive">Inactive</Badge>
@@ -115,12 +137,12 @@ export default function EmployeeTable() {
                                                             </Link>
                                                         </Button>
                                                         <DangerButton
-                                                         onClick={(e) => {
-                                                             e.stopPropagation();
-                                                             employeeConfirmBoxRef.current.handleOpen(employee.id);
-                                                         }}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                employeeConfirmBoxRef.current.handleOpen(employee.id);
+                                                            }}
                                                         >
-                                                         Delete Employee
+                                                            Delete Employee
                                                         </DangerButton>
                                                         <EmployeeConfirmBox
                                                             id={employee.id as number}

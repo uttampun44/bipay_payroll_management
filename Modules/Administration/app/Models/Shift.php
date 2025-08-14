@@ -27,6 +27,10 @@ class Shift extends Model
         'status'
     ];
 
+    protected $casts = [
+       'status' => 'boolean',
+    ];
+
     // protected static function newFactory(): ShiftFactory
     // {
     //     // return ShiftFactory::new();

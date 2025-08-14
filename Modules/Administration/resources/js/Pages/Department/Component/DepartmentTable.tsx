@@ -17,7 +17,7 @@ interface Department {
     department_code: string;
     description: string;
     budget: string;
-    status: number;
+    status: boolean;
 }
 
 export default function DepartmentTable() {
@@ -159,10 +159,10 @@ export default function DepartmentTable() {
                                         {department.budget}
                                     </TableCell>
                                     <TableCell className="p-2">
-                                        {department.status === 0 ?
-                                            (<Badge variant={"secondary"} >InActive</Badge>)
+                                        {department.status === true ?
+                                            <Badge variant={"info"}>Active</Badge>
                                             : (
-                                                <Badge variant={"info"}>Active</Badge>
+                                                (<Badge variant={"secondary"} >InActive</Badge>)
                                             )}
                                     </TableCell>
                                     <TableCell className="p-2 text-green-700 text-center">

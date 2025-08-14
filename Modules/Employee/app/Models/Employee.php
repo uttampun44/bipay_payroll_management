@@ -38,6 +38,10 @@ class Employee extends Model
     //     // return EmployeeFactory::new();
     // }
 
+    protected $casts = [
+       'employment_status' => 'boolean',
+    ];
+
     public function department()
     {
         return $this->belongsTo(Department::class);

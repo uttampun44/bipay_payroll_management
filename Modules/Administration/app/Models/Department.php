@@ -17,7 +17,11 @@ class Department extends Model
      */
     protected $table = 'departments';
     protected $fillable = ['department_name', 'department_code', 'description', 'budget', 'status'];
-
+    
+    protected $casts = [
+       'status' => 'boolean',
+    ];
+    
     // protected static function newFactory(): DepartmentFactory
     // {
     //     // return DepartmentFactory::new();

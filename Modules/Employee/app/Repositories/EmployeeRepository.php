@@ -3,7 +3,9 @@
 namespace Modules\Employee\app\Repositories;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Modules\Administration\app\Models\Department;
 use Modules\Administration\app\Models\JobDesk;
@@ -14,7 +16,7 @@ class EmployeeRepository
 {
     public function index(Request $request)
     {
-         $search = $request->get('search');
+        $search = $request->get('search');
 
         $employees = Employee::query()
             ->with(['department:id,department_name', 'jobDesk:id,job_title'])
@@ -74,10 +76,10 @@ class EmployeeRepository
         if ($data['image']) {
             $img_ext = $data['image']->getClientOriginalExtension();
             $uuidFilename = Str::uuid() . '.' . $img_ext;
-            $path = $data['image']->storeAs('app/public/employee', $uuidFilename);
+            $path = $data['image']->storeAs('employee', $uuidFilename, 'public');
             $data['image'] = $path;
         }
-
+        $data['password'] = Hash::make($data['password']);
         Employee::create($data);
     }
 
@@ -93,20 +95,33 @@ class EmployeeRepository
             'jobDesks' => $jobDesks,
         ]);
     }
+
     public function update(int $id, array $data)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
-        if (!$employee->id) {
-            return throw new \Exception("Employee not found");
+        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
+            if ($employee->image && Storage::disk('public')->exists($employee->image)) {
+                Storage::disk('public')->delete($employee->image);
+            }
+
+            $img_ext = $data['image']->getClientOriginalExtension();
+            $uuidFilename = Str::uuid() . '.' . $img_ext;
+            $path = $data['image']->storeAs('employee', $uuidFilename, 'public');
+            $data['image'] = $path;
+        } else {
+            unset($data['image']); 
+        }
+        
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
-        if($data['password']) {
-            $employee->password = Hash::make($data['password']);
-        }
-
-        $employee->update($data);
+        return $employee->update($data);
     }
+
 
     public function destroy($id)
     {

@@ -13,6 +13,7 @@ export default function EmployeePagination() {
                         {employees.prev_page_url && (
                             <PaginationItem>
                                 <PaginationPrevious
+                                   className="cursor-pointer"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         router.get(employees.prev_page_url, {}, {
@@ -45,6 +46,7 @@ export default function EmployeePagination() {
                         {employees.next_page_url && (
                             <PaginationItem>
                                 <PaginationNext
+                                className="cursor-pointer"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         router.get(employees.next_page_url, {}, {

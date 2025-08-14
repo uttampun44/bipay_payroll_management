@@ -1,7 +1,5 @@
-
 import Icon from "@/Components/Icon";
 import TextInput from "@/Components/TextInput";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 import useDebounce from "@/hooks/useDebounce";
 import { Link, router, usePage, WhenVisible } from "@inertiajs/react";

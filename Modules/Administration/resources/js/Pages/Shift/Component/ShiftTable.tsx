@@ -107,7 +107,7 @@ export default function ShiftTable() {
                                 </TableCell>
                                 <TableCell className="p-2">
                                     {
-                                        shift.status === 1 ? (
+                                        shift.status === true ? (
                                             <Badge variant={"success"}>
                                                 Active
                                             </Badge>
