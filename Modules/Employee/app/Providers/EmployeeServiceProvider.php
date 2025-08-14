@@ -6,6 +6,7 @@ use Modules\Employee\app\Repositories\EmployeeRepository;
 use Modules\Employee\app\Repositories\AppointmentRepository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Employee\app\Repositories\EmployeeShiftsRepository;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -44,6 +45,9 @@ class EmployeeServiceProvider extends ServiceProvider
         $this->app->bind(AppointmentRepository::class, function () {
             return new AppointmentRepository();
         });
+       $this->app->bind(EmployeeShiftsRepository::class, function (){
+        return new EmployeeShiftsRepository();
+       });
     }
 
     /**

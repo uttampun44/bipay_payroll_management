@@ -4,13 +4,9 @@ import { Head, router } from "@inertiajs/react";
 import EmployeeTable from "./Components/EmployeeTable";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList,  BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
 
-import { useState } from "react";
-
 export default function Index() {
 
     const pathUrl = window.location.pathname;
-
-    const [isOpen, setOpen] = useState(false);
    
     return (
         <AuthenticatedLayout>

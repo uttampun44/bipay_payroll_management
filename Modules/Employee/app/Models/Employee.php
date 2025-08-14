@@ -51,4 +51,9 @@ class Employee extends Model
     {
         return $this->belongsTo(JobDesk::class);
     }
+
+    public function employeeShifts()
+    {
+        return $this->hasMany(EmployeeShift::class);
+    }
 }

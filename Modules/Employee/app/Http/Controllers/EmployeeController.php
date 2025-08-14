@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Modules\Employee\app\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
 use Modules\Employee\Http\Requests\EmployeeRequest;
 
 class EmployeeController extends Controller

@@ -57,6 +57,11 @@ export const sidebarLinks: sidebarLinksType[] = [
                 icon: "employee",
             },
             {
+                name: "Employee Shift",
+                href: "/employees/employee-shifts",
+                icon: "shift",
+            },
+            {
                 name: "Appointment",
                 href: "/employees/appointments",
                 icon: "appointment",
