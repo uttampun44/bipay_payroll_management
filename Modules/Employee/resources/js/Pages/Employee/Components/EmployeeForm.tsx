@@ -11,7 +11,6 @@ import { departmentType } from "../types/department";
 import { jobDeskType } from "../types/jobdesk";
 import { Switch } from "@/Components/ui/switch";
 import InputError from "@/Components/InputError";
-import useToggle from "@/hooks/useToggle";
 import Icon from "@/Components/Icon";
 import React, { useState } from "react";
 
@@ -20,8 +19,6 @@ export default function EmployeeForm() {
     const jobDesks = usePage().props.jobDesks as jobDeskType[];
     const departments = usePage().props.departments as departmentType[];
 
-    const [isToggle, setToggle] = useToggle();
-    const [confirmPassword, setConfirmPassword] = useToggle();
     const [imagePreview, setImagePreview] = useState<string>("");
 
     const { data, setData, post: post, resetAndClearErrors, processing, errors } = useForm<employeType>({
@@ -29,8 +26,6 @@ export default function EmployeeForm() {
         first_name: "",
         last_name: "",
         email: "",
-        password: "",
-        password_confirmation: "",
         gender: "",
         phone: "",
         address: "",
@@ -44,12 +39,7 @@ export default function EmployeeForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(data);
         try {
-            if (data.password !== data.password_confirmation) {
-                return toast.error("Password and Confirm Password should be same")
-            };
-
             post(route("employees.store"), {
                 onSuccess: () => {
                     toast.success("Employee Added Successfully");
@@ -135,46 +125,6 @@ export default function EmployeeForm() {
                         }
                     />
                     <InputError message={errors.email} className="mt-2" />
-                </div>
-                <div className="password relative">
-                    <InputLabel htmlFor="password" value="Password" />
-                    <TextInput
-                        type={isToggle ? "text" : "password"}
-                        name="password"
-                        autoComplete="new-password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        onChange={(e) => setData("password", e.target.value)}
-                        required
-                    />
-                    <InputError message={errors.password} className="mt-2" />
-                    <div className="absolute right-2 top-1/2">
-                        <Icon
-                            iconName={isToggle ? "passwordVisibility" : "passwordHidden"}
-
-                            onClick={() => setToggle(!isToggle)}
-                        />
-                    </div>
-                </div>
-
-                <div className="confirm_password relative">
-                    <InputLabel htmlFor="confirm_password" value="Confirm Password" />
-                    <TextInput
-                        type={confirmPassword ? "text" : "password"}
-                        name="confirm_password"
-                        autoComplete="new-password"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        onChange={(e) => setData("password_confirmation", e.target.value)}
-                        required
-                    />
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                    <div className="absolute right-2 top-1/2">
-                        <Icon
-                            iconName={confirmPassword ? "passwordVisibility" : "passwordHidden"}
-                            onClick={() => setConfirmPassword(!confirmPassword)}
-                        />
-                    </div>
                 </div>
                 <div className="gender">
                     <InputLabel

@@ -18,12 +18,10 @@ import { jobDeskType } from "../types/jobdesk";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 
 export default function EmployeeEdit() {
-    const [isToggle, setToggle] = useToggle();
-    const [confirmPassword, setConfirmPassword] = useToggle();
+
     const [imagePreview, setImagePreview] = useState<string>("");
 
-    const editData = usePage().props.employee as employeeTypeEditResponse;
-    
+    const editData = usePage().props.employee as employeeTypeEditResponse;    
     const departments = usePage().props.departments as departmentType;
     const jobDesks = usePage().props.jobDesks as jobDeskType;
 
@@ -32,8 +30,6 @@ export default function EmployeeEdit() {
         first_name: editData.first_name || "",
         last_name: editData.last_name || "",
         email: editData.email || "",
-        password: "", 
-        password_confirmation: "", 
         gender: editData.gender || "",
         phone: editData.phone || "",
         address: editData.address || "",
@@ -140,46 +136,6 @@ export default function EmployeeEdit() {
                         }
                     />
                     <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="password relative">
-                    <InputLabel htmlFor="password" value="New Password (leave blank to keep current)" />
-                    <TextInput
-                        type={isToggle ? "text" : "password"}
-                        name="password"
-                        autoComplete="new-password"
-                        value={data.password}
-                        placeholder="Leave blank to keep current password"
-                        className="mt-1 block w-full"
-                        onChange={(e) => setData("password", e.target.value)}
-                    />
-                    <InputError message={errors.password} className="mt-2" />
-                    <div className="absolute right-2 top-1/2">
-                        <Icon
-                            iconName={isToggle ? "passwordVisibility" : "passwordHidden"}
-                            onClick={() => setToggle(!isToggle)}
-                        />
-                    </div>
-                </div>
-
-                <div className="confirm_password relative">
-                    <InputLabel htmlFor="confirm_password" value="Confirm New Password" />
-                    <TextInput
-                        type={confirmPassword ? "text" : "password"}
-                        name="confirm_password"
-                        autoComplete="new-password"
-                        value={data.password_confirmation}
-                        placeholder="Confirm new password"
-                        className="mt-1 block w-full"
-                        onChange={(e) => setData("password_confirmation", e.target.value)}
-                    />
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                    <div className="absolute right-2 top-1/2">
-                        <Icon
-                            iconName={confirmPassword ? "passwordVisibility" : "passwordHidden"}
-                            onClick={() => setConfirmPassword(!confirmPassword)}
-                        />
-                    </div>
                 </div>
 
                 <div className="gender">

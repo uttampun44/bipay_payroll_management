@@ -4,7 +4,6 @@ namespace Modules\Employee\app\Repositories;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Modules\Administration\app\Models\Department;
@@ -79,7 +78,6 @@ class EmployeeRepository
             $path = $data['image']->storeAs('employee', $uuidFilename, 'public');
             $data['image'] = $path;
         }
-        $data['password'] = Hash::make($data['password']);
         Employee::create($data);
     }
 
@@ -112,13 +110,6 @@ class EmployeeRepository
         } else {
             unset($data['image']); 
         }
-        
-        if (!empty($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
-        }
-
         return $employee->update($data);
     }
 

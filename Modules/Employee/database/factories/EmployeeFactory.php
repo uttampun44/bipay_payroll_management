@@ -36,7 +36,6 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => bcrypt('password'),
             'gender' => $this->faker->randomElement(['male', 'female']),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
