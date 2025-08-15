@@ -39,7 +39,7 @@ class DepartmentController extends Controller
     public function store(DepartmentRequest $request) 
     {
          try {
-            $this->departmentRepository->store($request->all());
+            $this->departmentRepository->store($request->validated());
             return to_route('departments.index')->with('success', 'Department created successfully!');
          } catch (\Throwable $th) {
             Log::error($th->getMessage());

@@ -3,6 +3,7 @@
 namespace Modules\Employee\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Modules\Employee\app\Repositories\EmployeeShiftsRepository;
 use Illuminate\Support\Facades\Log;
 use Modules\Employee\Http\Requests\EmployeeShiftRequest;
@@ -18,9 +19,9 @@ class EmployeeShiftController extends Controller
         $this->employeeShiftRepository = $employeeShiftRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->employeeShiftRepository->index();
+        return $this->employeeShiftRepository->index($request);
     }
 
     /**
@@ -37,9 +38,9 @@ class EmployeeShiftController extends Controller
     public function store(EmployeeShiftRequest $request) 
     {
       try {
-        return $this->employeeShiftRepository->store($request->validate());
-        
+        return $this->employeeShiftRepository->store($request->validated());
       } catch (\Throwable $th) {
+        Log::info($th->getMessage());
         Log::error($th->getMessage());
         throw new \Exception("Failed to create employee shift", 500, $th);
       }
@@ -64,15 +65,9 @@ class EmployeeShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeShiftRequest $request, $id) 
+    public function update(Request $request, $id) 
     {
-       try {
-        return $this->employeeShiftRepository->update($id, $request->all());
-
-       } catch (\Throwable $th) {
-         Log::error($th->getMessage());
-         throw new \Exception("Failed to update employee shift", 500, $th);
-       }
+       
     }
 
     /**
@@ -80,11 +75,6 @@ class EmployeeShiftController extends Controller
      */
     public function destroy($id) 
     {
-        try {
-            return $this->employeeShiftRepository->destroy($id);
-        } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            throw new \Exception("Failed to delete employee shift", 500, $th);
-        }
+    
     }
 }

@@ -37,8 +37,7 @@ class EmployeeController extends Controller
   public function store(EmployeeRequest $request)
   {
     try {
-      Log::info("EmployeeController::store", $request->all());
-      return $this->employeeRepository->store($request->all());
+      return $this->employeeRepository->store($request->validated());
     } catch (\Throwable $th) {
       Log::error($th->getMessage());
       throw new \Exception("Failed to create employee", 500, $th);

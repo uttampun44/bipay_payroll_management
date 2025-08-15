@@ -47,7 +47,6 @@ export default function EmployeeForm() {
                 },
                 onError: (error) => {
                     toast.error("Employee Creation Failed");
-                    console.info(error);
                 }
             });
         } catch (error) {
