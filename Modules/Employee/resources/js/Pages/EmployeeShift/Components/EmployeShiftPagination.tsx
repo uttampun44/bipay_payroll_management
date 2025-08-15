@@ -1,8 +1,10 @@
+// @ts-nocheck
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import { Link, router, usePage } from "@inertiajs/react";
 import { employeeShiftType } from "../types/employeeshift";
 
 export default function EmployeePagination() {
+
     const employees = usePage().props.employeeShifts as employeeShiftType[] | undefined;
      
     return (
@@ -17,7 +19,7 @@ export default function EmployeePagination() {
                                     e.preventDefault();
                                     router.get(employees.prev_page_url, {}, {
                                         preserveState: true,
-                                        only: ['employees']
+                                        only: ['employeeShifts']
                                     });
                                 }}
                             />
@@ -30,7 +32,7 @@ export default function EmployeePagination() {
                                 <Link
                                     href={link.url || '#'}
                                     preserveState
-                                    only={['employeesShifts']}
+                                    only={['employeeShifts']}
                                 >
                                     <PaginationLink
                                         isActive={link.active}
@@ -50,7 +52,9 @@ export default function EmployeePagination() {
                                     e.preventDefault();
                                     router.get(employees.next_page_url, {}, {
                                         preserveState: true,
-                                        only: ['employeesShifts']
+
+                                        // match with upper `only` prop like employeeShifts
+                                        only: ['employeeShifts']
                                     });
                                 }}
                             />

@@ -11,30 +11,32 @@ use Modules\Employee\Models\EmployeeShift;
 class EmployeeShiftsRepository
 {
     public function index(Request $request)
-    {   
+    {
         $search = $request->get('search');
 
         $employee = Employee::query()->select('id', 'employee_code')
-                      ->when($search, function ($query) use ($search) {
-                          $query->where('employee_code', 'like', "%{$search}%" );
-                      }, function ($query) {
-                          $query->limit(50);
-                      })->orderBy('employee_code', 'asc')
-                      ->limit(5)
-                      ->get();
-                             
-        $shifts =  Shift::query()->select('id','shift_name')->get();
+            ->when($search, function ($query) use ($search) {
+                $query->where('employee_code', 'like', "%{$search}%");
+            }, function ($query) {
+                $query->limit(50);
+            })->orderBy('employee_code', 'asc')
+            ->limit(5)
+            ->get();
 
-        $employeShifts = EmployeeShift::with(['employee:id,employee_code,first_name,last_name', 'shift:id,shift_name'])
-                            ->when($search, function ($query) use ($search) {
-                                 $query->whereAny([
-                                    'employee_code',
-                                    'first_name',
-                                    'last_name',
-                                    'start_date',
-                                    'end_date',
-                                 ], 'like', "%{$search}%")
-                                })->paginate(15)->withQueryString();
+        $shifts =  Shift::query()->select('id', 'shift_name')->get();
+        $employeShifts = EmployeeShift::with(['employee:id,employee_code,first_name,last_name,image', 'shift:id,shift_name'])
+            ->where(function ($query) use ($search) {
+                $query->where('start_date', 'like', "%{$search}%")
+                    ->orWhere('end_date', 'like', "%{$search}%");
+            })
+            ->orWhereHas('employee', function ($query) use ($search) {
+                $query->where('employee_code', 'like', "%{$search}%")
+                    ->orWhere('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('shift', function ($query) use ($search) {
+                $query->where('shift_name', 'like', "%{$search}%");
+            })->paginate(15)->withQueryString();
 
         return Inertia::render('Employee::EmployeeShift/Index', [
             'employee' => $employee,
@@ -47,8 +49,7 @@ class EmployeeShiftsRepository
     }
 
     public function store(array $data)
-    {   
-       EmployeeShift::create($data);
+    {
+        EmployeeShift::create($data);
     }
-
 }
