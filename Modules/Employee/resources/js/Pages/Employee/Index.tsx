@@ -1,16 +1,12 @@
 import { Button } from "@/Components/ui/button";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import EmployeeTable from "./Components/EmployeeTable";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
-import EmployeeDialog from "./Components/EmployeeDialog";
-import { useState } from "react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList,  BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
 
 export default function Index() {
 
     const pathUrl = window.location.pathname;
-
-    const [isOpen, setOpen] = useState(false);
    
     return (
         <AuthenticatedLayout>
@@ -40,7 +36,7 @@ export default function Index() {
                         <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                          type="button"
                          onClick={() => {
-                            setOpen(true);
+                          router.visit(route("employees.create"));
                          }}
                         >
                             Add Employee
@@ -52,7 +48,7 @@ export default function Index() {
                 </div>
             </div>
             <EmployeeTable />
-            <EmployeeDialog open={isOpen} setOpen={setOpen} />
+          
         </AuthenticatedLayout>
     );
 }

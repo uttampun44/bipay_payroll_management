@@ -3,8 +3,9 @@
 namespace Modules\Employee\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Employee\Database\Factories\EmployeeFactory;
 
-class EmployeeDatabaseSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +13,6 @@ class EmployeeDatabaseSeeder extends Seeder
     public function run(): void
     {
         // $this->call([]);
-        // $this->call(EmployeeSeeder::class);
-        $this->call(EmployeeShiftSeeder::class);
+        EmployeeFactory::new()->count(1500)->create();
     }
 }

@@ -21,7 +21,7 @@ export default function Login({
         remember: false as boolean,
     });
 
-    const { isToggle, setToggle } = useToggle(false);
+    const [isToggle, setToggle] = useToggle();
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -99,21 +99,11 @@ export default function Login({
                                     />
                                     <div className="toggle absolute right-1 top-1/2 ">
 
-                                    {
-                                        isToggle ? (
-                                            <Icon
-                                                iconName="passwordHidden"
-                                                className=" text-gray-400 cursor-pointer"
-                                                onClick={() => setToggle(!isToggle)}
-                                            />
-                                        ) : (
-                                             <Icon
-                                                iconName="passwordVisibility"
-                                                className=" text-gray-400 cursor-pointer"
-                                                onClick={() => setToggle(!isToggle)}
-                                            />
-                                        )
-                                    }
+                                    <Icon
+                                        iconName={isToggle ? "passwordHidden" : "passwordVisibility"}
+                                        className="absolute right-1 top-1/2 text-gray-400 cursor-pointer"
+                                        onClick={() => setToggle(!isToggle)}
+                                    />
                                     </div>
                                     <InputError
                                         message={errors.password}

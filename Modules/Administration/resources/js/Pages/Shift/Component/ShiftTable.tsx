@@ -6,6 +6,7 @@ import { Badge } from "@/Components/ui/badge";
 import { useState } from "react";
 import ShiftConfirmBox from "./ShiftConfirmBox";
 import ShiftEditDialog from "./ShiftEdit";
+import ShiftSkeletonTable from "./ShiftSkeletonTable";
 
 export default function ShiftTable() {
 
@@ -22,7 +23,7 @@ export default function ShiftTable() {
            <WhenVisible
            data={shifts as []}
            fallback={
-               <div>Loading...</div>
+               <ShiftSkeletonTable />
            }
            >
              <Table className="h-[500px] overflow-y-auto">
@@ -106,7 +107,7 @@ export default function ShiftTable() {
                                 </TableCell>
                                 <TableCell className="p-2">
                                     {
-                                        shift.status === 1 ? (
+                                        shift.status === true ? (
                                             <Badge variant={"success"}>
                                                 Active
                                             </Badge>
@@ -124,7 +125,6 @@ export default function ShiftTable() {
                                      size="sm"
                                     onClick={() =>{
                                         setSelectedId(shift.id);
-                                        console.log(shift)
                                         setEditData(shift  as any);
                                         setIsConfirmOpen(true);
                                     }}>

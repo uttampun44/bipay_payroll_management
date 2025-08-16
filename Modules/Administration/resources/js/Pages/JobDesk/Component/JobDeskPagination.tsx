@@ -12,6 +12,7 @@ export default function JobDeskPagination() {
                 {jobDesks.prev_page_url && (
                     <PaginationItem>
                         <PaginationPrevious
+                           className="cursor-pointer"
                             onClick={(e) => {
                                 e.preventDefault();
                                 router.get(jobDesks.prev_page_url, {}, {
@@ -44,6 +45,7 @@ export default function JobDeskPagination() {
                 {jobDesks.next_page_url && (
                     <PaginationItem>
                         <PaginationNext
+                            className="cursor-pointer"
                             onClick={(e) => {
                                 e.preventDefault();
                                 router.get(jobDesks.next_page_url, {}, {
