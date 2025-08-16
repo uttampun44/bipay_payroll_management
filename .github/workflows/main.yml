@@ -41,6 +41,3 @@ jobs:
             - name: Build Front assets
               run: npm run build
 
-              #php artisan serve
-            - name: php artisan serve
-              run: php artisan serve
