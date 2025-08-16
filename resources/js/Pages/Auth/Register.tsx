@@ -16,7 +16,7 @@ export default function Register() {
         password_confirmation: "",
     });
 
-    const { isToggle, setToggle } = useToggle(false);
+    const [ isToggle, setToggle ] = useToggle(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
