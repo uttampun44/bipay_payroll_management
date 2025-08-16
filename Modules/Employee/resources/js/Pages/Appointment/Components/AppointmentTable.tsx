@@ -39,7 +39,7 @@ export default function AppointmentTable(){
                 </TableBody>
             </Table>
             <div className="pagination flex justify-end items-center">
-                <Pagination>
+                {/* <Pagination>
                     <PaginationContent>
                         <PaginationItem>
                             <PaginationPrevious href="#" className="bg-blue-500" size="lg" />
@@ -54,7 +54,7 @@ export default function AppointmentTable(){
                             <PaginationNext href="#" className="bg-blue-500" size="lg" />
                         </PaginationItem>
                     </PaginationContent>
-                </Pagination>
+                </Pagination> */}
             </div>
         </div>
     )
