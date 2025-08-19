@@ -5,5 +5,4 @@ export interface employeeConfirmRef {
 
 export type EmployeeConfirmBoxProps = {
     id: number;
-    ref?: React.Ref<employeeConfirmRef>;
 };

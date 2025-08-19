@@ -1,13 +1,17 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
 import { Button } from "@/Components/ui/button";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Head, router } from "@inertiajs/react";
+import { Head} from "@inertiajs/react";
+import { useRef} from "react";
+import LeaveTypeDialog from "./Components/LeaveTypeDialog";
 
-export default function Index(){
+export default function Index() {
     const pathUrl = window.location.pathname;
+    const leaveTypeRef = useRef<any>();
+
     return (
         <Authenticated>
-             <Head title="Leave Type" />
+            <Head title="Leave Type" />
             <div className="header px-8 py-4">
                 <div className="breadCrumb mb-4 mt-4 ">
                     <Breadcrumb>
@@ -21,7 +25,7 @@ export default function Index(){
                                     {pathUrl.split("/").join("")}
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
-                           
+
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
@@ -31,10 +35,10 @@ export default function Index(){
                     </h6>
                     <div className="modal-employee flex gap-3">
                         <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                         type="button"
-                         onClick={() => {
-                          router.visit(route("employees.create"));
-                         }}
+                            type="button"
+                            onClick={() => {
+                                leaveTypeRef.current.handleOpen();
+                            }}
                         >
                             Add Leave Type
                         </Button>
@@ -44,6 +48,11 @@ export default function Index(){
                     </div>
                 </div>
             </div>
+
+            <LeaveTypeDialog
+                ref={leaveTypeRef}
+            />
+
         </Authenticated>
     )
 }
