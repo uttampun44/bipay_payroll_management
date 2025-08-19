@@ -4,12 +4,18 @@ namespace Modules\Leave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Leave\app\Repositories\LeaveTypeRepositories;
 
 class LeaveController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $leaveTypeRepository;
+    public function __construct(LeaveTypeRepositories $leaveTypeRepository)
+    {
+        $this->leaveTypeRepository = $leaveTypeRepository;
+    }
     public function index()
     {
         return view('leave::index');

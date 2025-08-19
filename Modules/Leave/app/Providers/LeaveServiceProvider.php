@@ -4,6 +4,7 @@ namespace Modules\Leave\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Leave\app\Repositories\LeaveTypeRepositories;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -36,6 +37,9 @@ class LeaveServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(LeaveTypeRepositories::class, function () {
+            return new LeaveTypeRepositories();
+        });
     }
 
     /**
