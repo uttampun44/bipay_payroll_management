@@ -4,7 +4,7 @@ namespace Modules\Leave\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LeaveType extends FormRequest
+class LeaveTypeRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,9 +12,9 @@ class LeaveType extends FormRequest
     public function rules(): array
     {
         return [
-            'leave_type_name' => 'required|string|max:255',
+             'leave_type_name' => 'required|string|max:255',
             'leave_code' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'max_days_per_year' => 'required|integer|min:1',
             'carry_forward_allowed' => 'required|boolean',
             'max_carry_forward_days' => 'required|integer|min:1',

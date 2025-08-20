@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('leave_type_name');
             $table->string('leave_code');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('max_days_per_year');
             $table->boolean('carry_forward_allowed');
             $table->integer('max_carry_forward_days');
             $table->boolean('is_paid');
             $table->boolean('require_approval');
-            $table->date('notice_days_required');
-            $table->boolean('status');
+            $table->integer('notice_days_required');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
 import { useForm } from "@inertiajs/react";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { toast } from "sonner";
 import { leaveType, leaveTypesProps } from "../leavetypes";
 import InputError from "@/Components/InputError";
@@ -13,38 +13,59 @@ import { Textarea } from "@headlessui/react";
 
 const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
     const [isOpen, setOpen] = useState(false);
-     const {isEditingMode} = props;
-    const { post: post, data, setData, errors, processing, resetAndClearErrors, } = useForm<leaveType>({
-       id: 0,
-       leave_type_name: "",
-       leave_code: "",
-       description: "",
-       max_days_per_year: "",
-       carry_forward_allowed: false,
-       max_carry_forward_days: "",
-       is_paid: false,
-       require_approval: false,
-       notice_days_required: "",
-       status: false,
+    const { isEditingMode, editData, leaveTypeId } = props;
+   
+    const { post: post, data, setData, errors, processing, resetAndClearErrors, transform, put:put } = useForm<leaveType>({
+        leave_type_name: "",
+        leave_code: "",
+        description: "",
+        max_days_per_year: '',
+        carry_forward_allowed: false,
+        max_carry_forward_days: '',
+        is_paid: false,
+        require_approval: false,
+        notice_days_required: '',
+        status: false,
     });
-    
+   
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        transform((data) => ({
+            ...data,
+           notice_days_required: Number(data.notice_days_required),
+           max_days_per_year: Number(data.max_days_per_year),
+           max_carry_forward_days: Number(data.max_carry_forward_days),
+        }))
         try {
-            post(route('leave-types.store'), {
-                onSuccess: () => {
-                    toast.success('Leave Type Added Successfully');
-                    console.log('leave type added successfully', data);
-                    setOpen(false);
-                    resetAndClearErrors();
-                },
-                onFinish: () => resetAndClearErrors(),
-                onError: (errors: any) => {
-                    toast.error('Leave Type Addition Failed');
-                    throw errors;
-                }
-            });
+            if (isEditingMode) {
+                put(route('leaves-types.update', { id: leaveTypeId }), {
+                   onSuccess: () => {
+                       toast.success('Leave Type Updated Successfully');
+                       setOpen(false);
+                       resetAndClearErrors();
+                   },
+                   onFinish: () => resetAndClearErrors(),
+                   onError: (errors: any) => {
+                       toast.error('Leave Type Update Failed');
+                       throw errors;
+                   }
+                })
+            } else {
+                post(route('leaves-types.store'), {
+                   onSuccess: () => {
+                       toast.success('Leave Type Added Successfully');
+                       setOpen(false);
+                       resetAndClearErrors();
+                   },
+                   onFinish: () => resetAndClearErrors(),
+                   onError: (errors: any) => {
+                       toast.error('Leave Type Addition Failed');
+                       throw errors;
+                   }
+               });
+            }
         } catch (error: any) {
+            console.error('error', error);
             throw new Error(error);
         }
     }
@@ -56,6 +77,16 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
             setOpen(false);
         }
     }));
+
+
+    const field = ["leave_type_name", "leave_code", "description", "max_days_per_year", "carry_forward_allowed", "max_carry_forward_days", "is_paid", "require_approval", "notice_days_required", "status"];
+    useEffect(() => {
+        if (isEditingMode && editData) {
+            field.forEach(f => {
+                setData(f as any, editData[f]);
+            });
+        }
+    }, [isEditingMode, editData]);
     return (
         <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogContent className="bg-white max-w-2xl w-full" >
@@ -105,14 +136,14 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                                 message={errors.leave_code}
                             />
                         </div>
-                       
+
                         <div className="leave-type-max-days-per-year mt-4">
                             <InputLabel
                                 htmlFor="max_days_per_year"
                                 value="Max Days Per Year"
                             />
                             <TextInput
-                                type="text"
+                                type="number"
                                 name="max_days_per_year"
                                 className="mt-1 block w-full"
                                 placeholder="Enter Max Days Per Year"
@@ -126,14 +157,14 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                                 message={errors.max_days_per_year}
                             />
                         </div>
-                       
+
                         <div className="leave-type-max-carry-forward-days mt-4">
                             <InputLabel
                                 htmlFor="max_carry_forward_days"
                                 value="Max Carry Forward Days"
                             />
                             <TextInput
-                                type="text"
+                                type="number"
                                 name="max_carry_forward_days"
                                 className="mt-1 block w-full"
                                 placeholder="Enter Max Carry Forward Days"
@@ -147,13 +178,13 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                                 message={errors.max_carry_forward_days}
                             />
                         </div>
-                         <div className="leave-type-notice-days-required mt-4">
+                        <div className="leave-type-notice-days-required mt-4">
                             <InputLabel
                                 htmlFor="notice_days_required"
                                 value="Notice Days Required"
                             />
                             <TextInput
-                                type="text"
+                                type="number"
                                 name="notice_days_required"
                                 className="mt-1 block w-full"
                                 placeholder="Enter Notice Days Required"
@@ -167,7 +198,7 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                                 message={errors.notice_days_required}
                             />
                         </div>
-                         <div className="leave-type-description mt-4">
+                        <div className="leave-type-description mt-4">
                             <InputLabel
                                 htmlFor="description"
                                 value="Description"
@@ -189,7 +220,7 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                         </div>
                     </div>
                     <div className="flex justify-between items-center">
-                          <div className="leave-type-carry-forward-allowed mt-4">
+                        <div className="leave-type-carry-forward-allowed mt-4">
                             <InputLabel
                                 htmlFor="carry_forward_allowed"
                                 value="Carry Forward Allowed"
@@ -237,7 +268,7 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                                 message={errors.require_approval}
                             />
                         </div>
-                       
+
                         <div className="leave-type-status mt-4">
                             <InputLabel
                                 htmlFor="status"
@@ -263,7 +294,7 @@ const LeaveTypeDialog = forwardRef<any, leaveTypesProps>((props, ref) => {
                             variant={"default"}
                             disabled={processing}
                         >
-                            Submit
+                            {isEditingMode ? 'Update' : 'Submit'}
                         </Button>
                         <DangerButton
                             className="mt-4 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"

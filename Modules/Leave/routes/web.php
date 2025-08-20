@@ -5,6 +5,6 @@ use Modules\Leave\Http\Controllers\LeaveController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('leave')->group(function () {
-       Route::resource('leaves-types', LeaveController::class)->names('leave');
+       Route::resource('leaves-types', LeaveController::class)->only(['index', 'store', 'update']);
     });
 });

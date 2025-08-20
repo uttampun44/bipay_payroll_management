@@ -37,7 +37,6 @@ export default function ShiftEditDialog({ id, isOpen, setOpen, editData }: editP
             put(route('shifts.update', { id: id }), {
                 onSuccess: () => {
                     toast.success('Shift Added Successfully');
-                    console.log('shift updated successfully', data);
                     setOpen(false);
                     resetAndClearErrors();
                 },

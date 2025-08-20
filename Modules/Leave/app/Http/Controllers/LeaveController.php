@@ -4,7 +4,9 @@ namespace Modules\Leave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Leave\app\Repositories\LeaveTypeRepositories;
+use Modules\Leave\Http\Requests\LeaveTypeRequest;
 
 class LeaveController extends Controller
 {
@@ -32,7 +34,15 @@ class LeaveController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(LeaveTypeRequest $request) 
+    {
+        try {
+            return $this->leaveTypeRepository->store($request->validated());
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            throw new \Exception($th->getMessage());
+        }
+    }
 
     /**
      * Show the specified resource.
@@ -53,7 +63,14 @@ class LeaveController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {}
+    public function update(LeaveTypeRequest $request, $id) {
+      try {
+         $this->leaveTypeRepository->update($id, $request->all());
+      } catch (\Throwable $th) {
+         Log::error($th->getMessage());
+         throw new \Exception($th->getMessage());
+      }
+    }
 
     /**
      * Remove the specified resource from storage.
