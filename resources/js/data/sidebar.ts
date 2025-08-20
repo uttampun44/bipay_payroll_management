@@ -75,6 +75,20 @@ export const sidebarLinks: sidebarLinksType[] = [
     },
     {
         id: 4,
+        moduleName: "Leave",
+        name: "Leave",
+        href: "#",
+        icon: "leave",
+        subNavigation: [
+            {
+                name: "Leave Type",
+                href: "/leave/leaves-types",
+                icon: "leave",
+            },
+        ],  
+    },
+    {
+        id: 5,
         moduleName: "Settings",
         name: "Settings",
         href: "#",
