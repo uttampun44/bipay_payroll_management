@@ -85,6 +85,11 @@ export const sidebarLinks: sidebarLinksType[] = [
                 href: "/leave/leaves-types",
                 icon: "leave",
             },
+            {
+                name: "Employee Leave Balance",
+                href: "/leave/employee-leave-balances",
+                icon: "leave",
+            }
         ],  
     },
     {
