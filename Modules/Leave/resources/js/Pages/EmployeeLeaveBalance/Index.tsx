@@ -1,6 +1,8 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import EmployeeLeaveBalanceBreadCrumb from "./Components/EmployeeLeaveBalanceBreadCrumb";
 import { Button } from "@/Components/ui/button";
+import EmployeeLeaveBalanceTable from "./Components/EmployeeLeaveBalanceTable";
+import { router } from "@inertiajs/react";
 
 export default function Index() {
   return (
@@ -15,7 +17,8 @@ export default function Index() {
                         <Button className=" text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                             type="button"
                             onClick={() => {
-                                // leaveTypeRef.current.handleOpen();
+                                console.log("Add Employee Leave Balance");
+                              router.get(route('employee-leave-balances.create'));
                             }}
                         >
                            Add Employee Leave Balance
@@ -26,6 +29,9 @@ export default function Index() {
                     </div>
                 </div>
             </div>
+              <div className="leave-type-list bg-white p-4 px-8 py-4 rounded-md" style={{ margin: "16px 32px" }}>
+                <EmployeeLeaveBalanceTable />
+              </div>
     </Authenticated>
   );
 }

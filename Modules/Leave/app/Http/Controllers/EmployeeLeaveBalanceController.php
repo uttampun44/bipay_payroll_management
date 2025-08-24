@@ -27,7 +27,7 @@ class EmployeeLeaveBalanceController extends Controller
      */
     public function create()
     {
-        return view('leave::create');
+       return $this->employeeLeaveBalanceRepository->create();
     }
 
     /**
