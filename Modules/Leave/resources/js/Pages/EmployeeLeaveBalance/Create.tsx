@@ -20,7 +20,14 @@ export default function Create() {
     }
     return (
         <Authenticated>
+            <div className="flex justify-between my-4 ">
             <EmployeeLeaveBalanceBreadCrumb />
+            <DangerButton
+              onClick={() =>{
+                window.history.back()
+              }}
+            >Back</DangerButton>  
+            </div>
                <EmployeeLeaveBalanceForm />
         </Authenticated >
     );

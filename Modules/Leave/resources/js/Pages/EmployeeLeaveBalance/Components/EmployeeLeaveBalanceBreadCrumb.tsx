@@ -5,7 +5,6 @@ import React from "react";
 export default function EmployeeLeaveBalanceBreadCrumb() {
     const pathUrl = window.location.pathname;
     return (
-            <div className="breadCrumb mb-4 mt-4 flex justify-between items-center">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -24,13 +23,5 @@ export default function EmployeeLeaveBalanceBreadCrumb() {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <DangerButton
-                    onClick={() => {
-                        window.history.back();
-                    }}
-                >
-                    Back
-                </DangerButton>
-            </div>
     );
 }
