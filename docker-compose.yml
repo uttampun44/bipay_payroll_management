@@ -5,7 +5,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: bipay-payroll-management/laravel-sail:8.4
+        image: bipay-payroll-management/bipay-app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -18,7 +18,12 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
-            - '.:/var/www/html'
+            - '.:/var/www/html:cached'
+        tmpfs:
+            - /tmp
+            - /var/tmp
+        shm_size: '2gb'
+            
         networks:
             - sail
         depends_on:
@@ -26,7 +31,7 @@ services:
 
     #mysql service to run the database
     mysql:
-        image: 'mysql/mysql-server:8.0'
+        image: 'mysql:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3307}:3306'
         environment:
