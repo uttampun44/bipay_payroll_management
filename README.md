@@ -16,3 +16,5 @@ https://docs.docker.com/compose/install/
 2. open the browser and go to `http://localhost`
 3. login the phpmyadmin  http://localhost:8080 and enter the username and password from .env file
 4. to stop the project run the command `docker-compose down`
+
+   <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7357992402915078144?compact=1" height="399" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
