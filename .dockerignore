@@ -1,0 +1,55 @@
+# .dockerignore - This is crucial for reducing image size
+.git
+.gitignore
+README.md
+.env.example
+.dockerignore
+Dockerfile
+docker-compose.yml
+.editorconfig
+
+# Dependencies (will be installed during build)
+node_modules
+vendor
+
+# Laravel specific
+storage/app/*
+!storage/app/.gitignore
+storage/framework/cache/*
+!storage/framework/cache/.gitignore
+storage/framework/sessions/*
+!storage/framework/sessions/.gitignore
+storage/framework/testing/*
+!storage/framework/testing/.gitignore
+storage/framework/views/*
+!storage/framework/views/.gitignore
+storage/logs/*
+!storage/logs/.gitignore
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+tests/
+phpunit.xml
+
+# Build artifacts
+public/build
+public/hot
+public/storage
+public/css
+public/js
+
+# Documentation
+docs/

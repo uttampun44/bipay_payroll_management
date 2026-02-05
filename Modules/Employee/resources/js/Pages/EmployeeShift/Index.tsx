@@ -25,7 +25,6 @@ export default function Index() {
 
     const employeeShifts = Array.isArray(employeeShiftsData) ? employeeShiftsData : [];
 
-    console.log('EmployeeShift', employeeShifts);
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearch = useDebounce(searchTerm, 500);
 
