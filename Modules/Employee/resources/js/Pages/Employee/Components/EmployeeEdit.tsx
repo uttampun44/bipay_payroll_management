@@ -42,12 +42,8 @@ export default function EmployeeEdit() {
         _method: 'PUT'
     })
 
-    console.log('editData:', editData.image);
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('Form data:', data);
-        
+        e.preventDefault();        
         try {
             post(route("employees.update", {id: editData.id}), {
                 forceFormData: true,
@@ -57,7 +53,6 @@ export default function EmployeeEdit() {
                     resetAndClearErrors();
                 },
                 onError: (errors) => {
-                    console.log('Form errors:', errors);
                     toast.error("Employee Update Failed");
                 }
             });

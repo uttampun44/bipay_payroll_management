@@ -22,8 +22,7 @@ export default function EmployeeTable() {
     const employeesData = Array.isArray(employees?.data) ? employees?.data : [];
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    
-    console.log('EmployeeTable', employeesData);
+
     const debouncedSearch = useDebounce(searchTerm, 500);
      
     useEffect(() => {

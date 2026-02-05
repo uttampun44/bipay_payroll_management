@@ -31,7 +31,6 @@ const ShiftDialog = forwardRef<any, ShiftDialogProps>(function ShiftDialog(props
             post(route('shifts.store'), {
                 onSuccess: () => {
                     toast.success('Shift Added Successfully');
-                    console.log('shift added successfully', data);
                     setOpen(false);
                     resetAndClearErrors();
                 },

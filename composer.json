@@ -77,6 +77,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
+        "classmap-authoritative": true,
+        "apcu-autoloader": true,
         "sort-packages": true,
         "disable-tls": true,
         "allow-plugins": {

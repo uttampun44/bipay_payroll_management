@@ -75,6 +75,25 @@ export const sidebarLinks: sidebarLinksType[] = [
     },
     {
         id: 4,
+        moduleName: "Leave",
+        name: "Leave",
+        href: "#",
+        icon: "leave",
+        subNavigation: [
+            {
+                name: "Leave Type",
+                href: "/leave/leaves-types",
+                icon: "leave",
+            },
+            {
+                name: "Employee Leave Balance",
+                href: "/leave/employee-leave-balances",
+                icon: "leave",
+            }
+        ],  
+    },
+    {
+        id: 5,
         moduleName: "Settings",
         name: "Settings",
         href: "#",
