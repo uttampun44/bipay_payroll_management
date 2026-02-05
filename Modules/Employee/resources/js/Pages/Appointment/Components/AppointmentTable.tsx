@@ -42,7 +42,7 @@ export default function AppointmentTable(){
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
-                            <PaginationPrevious href="#" className="bg-blue-500" />
+                            <PaginationPrevious href="#" className="bg-blue-500" size="lg" />
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationLink href="#">1</PaginationLink>
@@ -51,7 +51,7 @@ export default function AppointmentTable(){
                             <PaginationEllipsis />
                         </PaginationItem>
                         <PaginationItem>
-                            <PaginationNext href="#" className="bg-blue-500" />
+                            <PaginationNext href="#" className="bg-blue-500" size="lg" />
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>

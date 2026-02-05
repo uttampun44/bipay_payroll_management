@@ -80,6 +80,7 @@
         "classmap-authoritative": true,
         "apcu-autoloader": true,
         "sort-packages": true,
+        "disable-tls": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
